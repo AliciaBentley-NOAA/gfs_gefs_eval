@@ -39,9 +39,9 @@ export OUTPUT_PATH=${DATA_PATH}/'output'
 # Select forecast files to download (true/false)
 export GET_GFS_FCSTS=false
 export GET_GEFS_FCSTS=false
-export GET_GEFS_MEMS=true
-export GEFS_MEMS_VDATE=2022021100    #YYYYMMDDHH
-export GEFS_MEMS_INC=24              #Typically 24 (hours)
+export GET_GEFS_DPROGDT=true
+export DPROGDT_VDATE=2022021100    #YYYYMMDDHH
+export DPROGDT_INC=24              #Typically 24 (hours)
 
 # Select analysis files to download (true/false)
 export GET_GFS_ANL=false
@@ -76,11 +76,11 @@ if [ $counter = 1 ]; then
    python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
    mv ${SCRIPTS_PATH}/${CASE}_fhrs.txt ${DATA_PATH}/${CASE}_fhrs.txt
    sleep 3
-   if [ $GET_GEFS_MEMS = true ]; then
+   if [ $GET_GEFS_DPROGDT = true ]; then
       echo "Creating a list of intialization times for GEFS dprog/dt"
-      python ${SCRIPTS_PATH}/list_init_dates.py ${GEFS_MEMS_VDATE} ${FHR_START} ${FHR_END} ${GEFS_MEMS_INC} ${CASE}
+      python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
       mv ${SCRIPTS_PATH}/${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
-      cp ${SCRIPTS_PATH}/gefs_members.txt ${DATA_PATH}/${CASE}_gefs_mems.txt
+      cp ${SCRIPTS_PATH}/gefs_members.txt ${DATA_PATH}/${CASE}_gefs_members.txt
       sleep 3
    fi   
 fi
@@ -100,9 +100,9 @@ if [ $GET_GEFS_FCSTS = true ]; then
 fi
 
 echo "*********************"
-if [ $GET_GEFS_MEMS = true ]; then
-    echo "Create/submit script to download ops/retro GEFS members valid ${GEFS_MEMS_VDATE}"
-    ${SCRIPTS_PATH}/create_htar_gefs_mems.sh
+if [ $GET_GEFS_DROGDT = true ]; then
+    echo "Create/submit script to download ops/retro GEFS members valid ${DPRODDT_VDATE}"
+    ${SCRIPTS_PATH}/create_htar_gefs_dprogdt.sh
     sleep 5
 fi
 

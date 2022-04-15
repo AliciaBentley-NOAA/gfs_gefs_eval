@@ -54,21 +54,21 @@ fi
 # Creating a job to download data on a particular ops GEFS forecast cycle (CYCLE)
 #-----------------------------------------------------------------------------------------
 
-cat > ${DATA_PATH}/gefs/dprogdt/${INIT}/untar_ops/htar_gefs_opsmems.sh <<EOF
+cat > ${DATA_PATH}/gefs/dprogdt/${INIT}/untar_ops/htar_gefs_dprogdt_opsfcst.sh <<EOF
 #!/bin/bash
-#PBS -N memsops_htar
-#PBS -o ${OUTPUT_PATH}/out_htar_gefs_opsmems_${CYCLE}.out
-#PBS -e ${OUTPUT_PATH}/out_htar_gefs_opsmems_${CYCLE}.err
+#PBS -N dprogops_htar
+#PBS -o ${OUTPUT_PATH}/out_htar_gefs_dprogdt_opsfcst_${INIT}.out
+#PBS -e ${OUTPUT_PATH}/out_htar_gefs_dprogdt_opsfcst_${INIT}.err
 #PBS -l select=1:ncpus=1:mem=4GB
 #PBS -q dev_transfer
-#PBS -l walltime=01:30:00
+#PBS -l walltime=02:00:00
 #PBS -A VERF-DEV
 
 cd ${DATA_PATH}/gefs/dprogdt/${INIT}/untar_ops
 
-/bin/rm -rf ${DATA_PATH}/htar_gefs_opsmems_${INIT}_done
+/bin/rm -rf ${DATA_PATH}/htar_gefs_dprogdt_opsfcst_${INIT}_done
 
-export input="${DATA_PATH}/${CASE}_gefs_mems.txt"
+export input="${DATA_PATH}/${CASE}_gefs_members.txt"
 
 while IFS= read -r line ; do
 	#echo "Reading the next line of "${input}
@@ -95,7 +95,7 @@ EOF
 
 #----------------------------------------------------------------------------------------
 
-qsub ${DATA_PATH}/gefs/dprogdt/${INIT}/untar_ops/htar_gefs_opsmems.sh
+qsub ${DATA_PATH}/gefs/dprogdt/${INIT}/untar_ops/htar_gefs_dprogdt_opsfcst.sh
 sleep 3
 
 #----------------------------------------------------------------------------------------

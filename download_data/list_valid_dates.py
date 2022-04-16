@@ -23,7 +23,7 @@ fhrs = np.arange(fhrb,int((2*fhre)+(step*2)),step)
 
 valid_list = [date_str + dt.timedelta(hours = int(x)) for x in fhrs]
 
-f = open(DIR+'/'+case+'_valid_dates.txt',"w+")
+f = open(DIR+'/download_data/'+case+'_valid_dates.txt',"w+")
 
 for k in range(len(valid_list)):
        f.write(valid_list[k].strftime("%Y%m%d%H")+" \n")

@@ -14,7 +14,7 @@ step = int(sys.argv[4])
 case = str(sys.argv[5])
 fhrs = np.arange(fhrb,int(fhre+step),step)
 
-f = open(DIR+'/'+case+'_fhrs.txt',"w+")
+f = open(DIR+'/download_data/'+case+'_fhrs.txt',"w+")
 
 for k in range(len(fhrs)):
     if (fhrs[k] < 10):

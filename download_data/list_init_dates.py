@@ -24,7 +24,7 @@ fhrs = np.arange(fhrb,int((fhre)+(step)),step)
 
 valid_list = [date_str - dt.timedelta(hours = int(x)) for x in fhrs]
 
-f = open(DIR+'/'+case+'_init_dates.txt',"w+")
+f = open(DIR+'/download_data/'+case+'_init_dates.txt',"w+")
 
 for k in range(len(valid_list)):
     if (fhrs[k] < 10):

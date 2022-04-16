@@ -68,6 +68,7 @@ if [ $counter = 0 ]; then
     echo "Starting drive_download_data.sh for: "$CASE $FHR_START $FHR_END $FHR_INC
 fi
 
+echo "*********************"
 export CYCLE=${longdate}${hour}
 echo "CYCLE: "$CYCLE
 counter=$(($counter+1))
@@ -79,20 +80,21 @@ if [ $counter = 1 ]; then
 
    echo "Creating lists of valid dates (for analysis files)"
    python ${SCRIPTS_PATH}/list_valid_dates.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
-   mv ${SCRIPTS_PATH}/${CASE}_valid_dates.txt ${DATA_PATH}/${CASE}_valid_dates.txt
+   mv ${SCRIPTS_PATH}/../${CASE}_valid_dates.txt ${DATA_PATH}/${CASE}_valid_dates.txt
    sleep 1
 
    echo "Create list of forecast hours (${FHR_START} ${FHR_END} ${FHR_INC})"
    python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
-   mv ${SCRIPTS_PATH}/${CASE}_fhrs.txt ${DATA_PATH}/${CASE}_fhrs.txt
+   mv ${SCRIPTS_PATH}/../${CASE}_fhrs.txt ${DATA_PATH}/${CASE}_fhrs.txt
    sleep 1
 
    if [ $GET_GEFS_DPROGDT = true ]; then
       echo "Creating a list of intialization times for GEFS dprog/dt"
       python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
-      mv ${SCRIPTS_PATH}/${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
+      mv ${SCRIPTS_PATH}/../${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
       sleep 1
    fi   
+
 fi
 
 echo "*********************"

@@ -87,7 +87,6 @@ if [ $counter = 1 ]; then
       echo "Creating a list of intialization times for GEFS dprog/dt"
       python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
       mv ${SCRIPTS_PATH}/${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
-      cp ${SCRIPTS_PATH}/gefs_members.txt ${DATA_PATH}/${CASE}_gefs_members.txt
       sleep 1
    fi   
 fi

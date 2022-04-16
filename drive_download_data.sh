@@ -9,7 +9,7 @@ module load PrgEnv-intel/8.1.0
 module load craype/2.7.10
 module load cray-mpich/8.1.9
 module load imagemagick/7.0.8-7
-module load wgrib2
+module load wgrib2/2.0.8_wmo
 #Load Python
 module load python/3.8.6
 module load proj/7.1.0
@@ -21,20 +21,26 @@ counter=0
 
 #==============================================  BEGIN CHANGES  ================================================
 
-# Location of your saved GFSv17/GEFSv13 evaluation scripts
-export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/gfs_gefs_eval/download_data'
-
-# Specify case name and forecast length
+# Specify case name, forecast length, and forecast timestep (increment)
 export CASE='SNODissue'
 export FHR_START=0
 export FHR_END=240       # Typically 240 (hours = 10 days)
 export FHR_INC=6         # Typically 6 (hours)
 
+# Location of your saved GFSv17/GEFSv13 evaluation /download_data directory
+export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/gfs_gefs_eval/download_data'
+
 # Location to store downloaded forecasts/analyses files
 export DATA_PATH='/lfs/h2/emc/ptmp/Alicia.Bentley/gfs_gefs_eval/'${CASE}
 
-# Location to write output from submitted jobs
+# Location to write output from submitted download data jobs
 export OUTPUT_PATH=${DATA_PATH}/'output'
+
+# Select analysis files to download (true/false)
+export GET_GFS_ANL=true
+export GET_RAP_ANL=true
+export GET_ST4_ANL=true
+export GET_NOHRSC_ANL=true
 
 # Select forecast files to download (true/false)
 export GET_GFS_FCSTS=true
@@ -45,17 +51,11 @@ export GET_GEFS_DPROGDT=true
 export DPROGDT_VDATE=2022021100    	#YYYYMMDDHH
 export DPROGDT_INC=24              	#Typically 24 (hours)
 
-# Select analysis files to download (true/false)
-export GET_GFS_ANL=true
-export GET_RAP_ANL=true
-export GET_ST4_ANL=true
-export GET_NOHRSC_ANL=true
-
-# Specify initialization dates/times to download
+# Specify initialization dates/times to download (typically 11 dates, ending on date of event)
 #for cycle in 20190827 20190828 20190829 20190830 20190831 20190901 20190902 20190903 20190904 20190905 20190906
 #do
 
-for longdate in 20220201            #20200829   #20191124
+for longdate in 20220201
 do
 
 for hour in 00 12

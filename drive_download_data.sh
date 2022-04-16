@@ -31,7 +31,7 @@ export FHR_END=240       # Typically 240 (hours = 10 days)
 export FHR_INC=6         # Typically 6 (hours)
 
 # Location to store downloaded forecasts/analyses files
-export DATA_PATH='/lfs/h2/emc/stmp/Alicia.Bentley/gfs_gefs_eval/'${CASE}
+export DATA_PATH='/lfs/h2/emc/ptmp/Alicia.Bentley/gfs_gefs_eval/'${CASE}
 
 # Location to write output from submitted jobs
 export OUTPUT_PATH=${DATA_PATH}/'output'
@@ -40,6 +40,8 @@ export OUTPUT_PATH=${DATA_PATH}/'output'
 export GET_GFS_FCSTS=false
 export GET_GEFS_FCSTS=false
 export GET_GEFS_DPROGDT=true
+
+# Select valid date/forecast inc if 
 export DPROGDT_VDATE=2022021100    #YYYYMMDDHH
 export DPROGDT_INC=24              #Typically 24 (hours)
 
@@ -61,10 +63,15 @@ do
 
 #===============================================  END CHANGES  =================================================
 
+if [ $counter = 0 ]; then
+    echo " "
+    echo "Starting driver script for: "$CASE
+fi
+
 export CYCLE=${longdate}${hour}
-echo $CYCLE
+echo "CYCLE: "$CYCLE
 counter=$(($counter+1))
-echo "Counter: "$counter
+#echo "counter: "$counter
 
 echo "*********************"
 if [ $counter = 1 ]; then	
@@ -72,16 +79,16 @@ if [ $counter = 1 ]; then
    echo "Creating lists of valid dates (for analyses) and forcast hours"
    python ${SCRIPTS_PATH}/list_valid_dates.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
    mv ${SCRIPTS_PATH}/${CASE}_valid_dates.txt ${DATA_PATH}/${CASE}_valid_dates.txt
-   sleep 3
+   sleep 1
    python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
    mv ${SCRIPTS_PATH}/${CASE}_fhrs.txt ${DATA_PATH}/${CASE}_fhrs.txt
-   sleep 3
+   sleep 1
    if [ $GET_GEFS_DPROGDT = true ]; then
       echo "Creating a list of intialization times for GEFS dprog/dt"
       python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
       mv ${SCRIPTS_PATH}/${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
       cp ${SCRIPTS_PATH}/gefs_members.txt ${DATA_PATH}/${CASE}_gefs_members.txt
-      sleep 3
+      sleep 1
    fi   
 fi
 
@@ -100,8 +107,8 @@ if [ $GET_GEFS_FCSTS = true ]; then
 fi
 
 echo "*********************"
-if [ $GET_GEFS_DROGDT = true ]; then
-    echo "Create/submit script to download ops/retro GEFS members valid ${DPRODDT_VDATE}"
+if [ $GET_GEFS_DPROGDT = true ] && [ $counter = 1 ]; then
+    echo "Create/submit script to download ops/retro GEFS members valid ${DPROGDT_VDATE}"
     ${SCRIPTS_PATH}/create_htar_gefs_dprogdt.sh
     sleep 5
 fi

@@ -6,9 +6,9 @@
 
 echo data path: ${DATA_PATH}/analyses
 echo output path: ${OUTPUT_PATH}
-echo fhr_inc: ${FHR_INC}
-echo fhr_start: ${FHR_START}
-echo fhr_end: ${FHR_END}
+#echo fhr_inc: ${FHR_INC}
+#echo fhr_start: ${FHR_START}
+#echo fhr_end: ${FHR_END}
 
 mkdir -p ${OUTPUT_PATH}
 mkdir -p ${DATA_PATH}/analyses/untar_nohrsc

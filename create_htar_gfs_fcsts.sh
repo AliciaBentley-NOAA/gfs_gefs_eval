@@ -6,9 +6,9 @@
 
 echo data path: ${DATA_PATH}/gfs/${CYCLE}
 echo output path: ${OUTPUT_PATH}
-echo fhr_inc: ${FHR_INC}
-echo fhr_start: ${FHR_START}
-echo fhr_end: ${FHR_END}
+#echo fhr_inc: ${FHR_INC}
+#echo fhr_start: ${FHR_START}
+#echo fhr_end: ${FHR_END}
 
 mkdir -p ${OUTPUT_PATH}
 mkdir -p ${DATA_PATH}/gfs/${CYCLE}/untar_ops
@@ -78,15 +78,15 @@ while IFS= read -r line ; do
 	#echo "Reading the next line of "${file}
 	export FHHH=${FHHH_temp}
 
-#        /bin/rm -rf ${DATA_PATH}/gfs/${CYCLE}/gfsv16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
+#        /bin/rm -rf ${DATA_PATH}/gfs/${CYCLE}/gfs.v16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
 
-        if [[ -s ${DATA_PATH}/gfs/${CYCLE}/gfsv16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
+        if [[ -s ${DATA_PATH}/gfs/${CYCLE}/gfs.v16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
 		echo ${CYCLE} "F"${FHHH_same}" ops GFS forecast files exists"
 	else
 		echo "Extracting "${CYCLE}" ops GFS forecast file "${FHHH_same}
 		htar -xvf $GFS_ARCHIVE $GFS_FILENAME
         	sleep 3
-	        mv $GFS_FILENAME ${DATA_PATH}/gfs/${CYCLE}/gfsv16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
+	        mv $GFS_FILENAME ${DATA_PATH}/gfs/${CYCLE}/gfs.v16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
 	fi
 
 done < ${file}
@@ -142,15 +142,15 @@ while IFS= read -r line ; do
 	echo "Reading the next line of "${file}
 	export FHHH=${FHHH_temp}
 
-#	/bin/rm -rf ${DATA_PATH}/gfs/${CYCLE}/gfsv17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
+#	/bin/rm -rf ${DATA_PATH}/gfs/${CYCLE}/gfs.v17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
 
-	if [[ -s ${DATA_PATH}/gfs/${CYCLE}/gfsv17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
+	if [[ -s ${DATA_PATH}/gfs/${CYCLE}/gfs.v17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
 		echo ${CYCLE} "F"${FHHH_same}" retro GFS forecast files exists"
 	else
 		echo "Extracting "${CYCLE}" retro GFS forecast file "${FHHH_same}
 		htar -xvf $GFS_ARCHIVE $GFS_FILENAME
         	sleep 3
-	        mv $GFS_FILENAME ${DATA_PATH}/gfs/${CYCLE}/gfsv17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
+	        mv $GFS_FILENAME ${DATA_PATH}/gfs/${CYCLE}/gfs.v17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2
 	fi
 
 done < ${file}

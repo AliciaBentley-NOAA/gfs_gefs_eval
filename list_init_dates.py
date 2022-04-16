@@ -13,14 +13,14 @@ MM   = int(valid[4:6])
 DD   = int(valid[6:8])
 HH   = int(valid[8:10])
 date_str = datetime(YYYY,MM,DD,HH)
-print(date_str)
+#print(date_str)
 
 fhrb = int(sys.argv[2])
 fhre = int(sys.argv[3])
 step = int(sys.argv[4])
 case = str(sys.argv[5])
 fhrs = np.arange(fhrb,int((fhre)+(step)),step)
-print(fhrs)
+#print(fhrs)
 
 valid_list = [date_str - dt.timedelta(hours = int(x)) for x in fhrs]
 

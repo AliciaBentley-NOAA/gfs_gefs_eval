@@ -19,7 +19,7 @@ fhrb = int(sys.argv[2])
 fhre = int(sys.argv[3])
 step = int(sys.argv[4])
 case = str(sys.argv[5])
-fhrs = np.arange(fhrb,int((2*fhre)+(step*2)),step)
+fhrs = np.arange(fhrb,int((fhre)+(step*2)),step)
 
 valid_list = [date_str + dt.timedelta(hours = int(x)) for x in fhrs]
 

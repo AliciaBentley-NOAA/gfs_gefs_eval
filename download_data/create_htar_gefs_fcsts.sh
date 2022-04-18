@@ -31,19 +31,19 @@ export GEFS_CHANGE_DATE1=2019082000
 
 
 if ((${CYCLE} >= ${GEFS_CHANGE_DATE2})) ; then
-	GEFS_ARCHIVE=/NCEPPROD/2year/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gefs_prod_gefs.${YYYYMMDD}_${HH}.atmos_pgrb2ap5.tar
-        GEFS_AVG_FILENAME=./atmos/pgrb2ap5/geavg.t${HH}z.pgrb2a.0p50.f${FHHH_same}
-	GEFS_SPR_FILENAME=./atmos/pgrb2ap5/gespr.t${HH}z.pgrb2a.0p50.f${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/2year/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gefs_prod_gefs.${YYYYMMDD}_${HH}.atmos_pgrb2ap5.tar
+        GEFSA_AVG_FILENAME=./atmos/pgrb2ap5/geavg.t${HH}z.pgrb2a.0p50.f${FHHH_same}
+	GEFSA_SPR_FILENAME=./atmos/pgrb2ap5/gespr.t${HH}z.pgrb2a.0p50.f${FHHH_same}
 
 elif (((${CYCLE} >= ${GEFS_CHANGE_DATE1}) && (${CYCLE} < ${GEFS_CHANGE_DATE2}))) ; then
-	GEFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/gpfs_dell2_nco_ops_com_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
-        GEFS_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
-	GEFS_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/gpfs_dell2_nco_ops_com_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
+        GEFSA_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_SPR_FILENAME=./pgrb2a/gespr.t${HH}z.pgrb2af${FHHH_same}
 
 elif ((${CYCLE} < ${GEFS_CHANGE_DATE1})) ; then
-	GEFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com2_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
-        GEFS_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
-	GEFS_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com2_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
+        GEFSA_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
 fi
 
 
@@ -75,21 +75,21 @@ while IFS= read -r line ; do
 #        /bin/rm -rf ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 
         if [[ -s ${DATA_PATH}/gefs/${CYCLE}/geavg.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
-		echo ${CYCLE} "F"${FHHH_same}" ops GEFS mean forecast files exists"
+		echo ${CYCLE} "F"${FHHH_same}" ops GEFSA mean forecast files exists"
 	else
-		echo "Extracting "${CYCLE}" ops GEFS mean forecast file "${FHHH_same}
-		htar -xvf $GEFS_ARCHIVE $GEFS_AVG_FILENAME
+		echo "Extracting "${CYCLE}" ops GEFSA mean forecast file "${FHHH_same}
+		htar -xvf $GEFSA_ARCHIVE $GEFSA_AVG_FILENAME
         	sleep 3
-	        mv $GEFS_AVG_FILENAME ${DATA_PATH}/gefs/${CYCLE}/geavg.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
+	        mv $GEFSA_AVG_FILENAME ${DATA_PATH}/gefs/${CYCLE}/geavg.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 	fi
 
         if [[ -s ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
-		echo ${CYCLE} "F"${FHHH_same}" ops GEFS spread forecast files exists"
+		echo ${CYCLE} "F"${FHHH_same}" ops GEFSA spread forecast files exists"
 	else
-		echo "Extracting "${CYCLE}" ops GEFS spread forecast file "${FHHH_same}
-		htar -xvf $GEFS_ARCHIVE $GEFS_SPR_FILENAME
+		echo "Extracting "${CYCLE}" ops GEFSA spread forecast file "${FHHH_same}
+		htar -xvf $GEFSA_ARCHIVE $GEFSA_SPR_FILENAME
 		sleep 3
-		mv $GEFS_SPR_FILENAME ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
+		mv $GEFSA_SPR_FILENAME ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 	fi
 
 done < ${file}
@@ -113,23 +113,21 @@ sleep 3
 export GEFS_CHANGE_DATE2=2020092312
 export GEFS_CHANGE_DATE1=2019082000
 
-
 if ((${CYCLE} >= ${GEFS_CHANGE_DATE2})) ; then
-        GEFS_ARCHIVE=/NCEPPROD/2year/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gefs_prod_gefs.${YYYYMMDD}_${HH}.atmos_pgrb2ap5.tar
-	GEFS_AVG_FILENAME=./atmos/pgrb2ap5/geavg.t${HH}z.pgrb2a.0p50.f${FHHH_same}
-	GEFS_SPR_FILENAME=./atmos/pgrb2ap5/gespr.t${HH}z.pgrb2a.0p50.f${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/2year/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gefs_prod_gefs.${YYYYMMDD}_${HH}.atmos_pgrb2ap5.tar
+	GEFSA_AVG_FILENAME=./atmos/pgrb2ap5/geavg.t${HH}z.pgrb2a.0p50.f${FHHH_same}
+	GEFSA_SPR_FILENAME=./atmos/pgrb2ap5/gespr.t${HH}z.pgrb2a.0p50.f${FHHH_same}
 
 elif (((${CYCLE} >= ${GEFS_CHANGE_DATE1}) && (${CYCLE} < ${GEFS_CHANGE_DATE2}))) ; then
-	GEFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/gpfs_dell2_nco_ops_com_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
-	GEFS_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
-	GEFS_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/gpfs_dell2_nco_ops_com_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
+	GEFSA_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_SPR_FILENAME=./pgrb2a/gespr.t${HH}z.pgrb2af${FHHH_same}
 
 elif ((${CYCLE} < ${GEFS_CHANGE_DATE1})) ; then
-	GEFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com2_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
-	GEFS_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
-	GEFS_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com2_gens_prod_gefs.${YYYYMMDD}_${HH}.pgrb2a.tar
+	GEFSA_AVG_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
+	GEFSA_SPR_FILENAME=./pgrb2a/geavg.t${HH}z.pgrb2af${FHHH_same}
 fi
-
 
 #-----------------------------------------------------------------------------------------
 # Creating a job to download data on a particular GEFS retro cycle (CYCLE)
@@ -159,21 +157,21 @@ while IFS= read -r line ; do
 #	/bin/rm -rf ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 
 	if [[ -s ${DATA_PATH}/gefs/${CYCLE}/geavg.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
-		echo ${CYCLE} "F"${FHHH_same}" ops GEFS mean forecast files exists"
+		echo ${CYCLE} "F"${FHHH_same}" ops GEFSA mean forecast files exists"
 	else
-		echo "Extracting "${CYCLE}" ops GEFS mean forecast file "${FHHH_same}
-		htar -xvf $GEFS_ARCHIVE $GEFS_AVG_FILENAME
+		echo "Extracting "${CYCLE}" ops GEFSA mean forecast file "${FHHH_same}
+		htar -xvf $GEFSA_ARCHIVE $GEFSA_AVG_FILENAME
 		sleep 3
-		mv $GEFS_AVG_FILENAME ${DATA_PATH}/gefs/${CYCLE}/geavg.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
+		mv $GEFSA_AVG_FILENAME ${DATA_PATH}/gefs/${CYCLE}/geavg.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 	fi
 
 	if [[ -s ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
-		echo ${CYCLE} "F"${FHHH_same}" ops GEFS spread forecast files exists"
+		echo ${CYCLE} "F"${FHHH_same}" ops GEFSA spread forecast files exists"
 	else
-		echo "Extracting "${CYCLE}" ops GEFS spread forecast file "${FHHH_same}
-		htar -xvf $GEFS_ARCHIVE $GEFS_SPR_FILENAME
+		echo "Extracting "${CYCLE}" ops GEFSA spread forecast file "${FHHH_same}
+		htar -xvf $GEFSA_ARCHIVE $GEFSA_SPR_FILENAME
 		sleep 3
-		mv $GEFS_SPR_FILENAME ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
+		mv $GEFSA_SPR_FILENAME ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2
 	fi
 
 done < ${file}

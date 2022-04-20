@@ -4,7 +4,7 @@
 # that check for download data from HPSS
 ##############################################
 
-echo data path: ${DATA_PATH}/gfs/${CYCLE}
+echo data path: ${DATA_PATH}/gefs/${CYCLE}
 echo output path: ${DATA_PATH}/check_data
 #echo fhr_inc: ${FHR_INC}
 #echo fhr_start: ${FHR_START}
@@ -22,25 +22,25 @@ export FHHH_same='${FHHH}'
 
 file="${DATA_PATH}/${CASE}_fhrs.txt"
 
-if [[ -s ${DATA_PATH}/check_data/results_check_gfs_fcsts_${CYCLE}.out ]] ; then
-	/bin/rm -rf ${DATA_PATH}/check_data/results_check_gfs_fcsts_${CYCLE}.out
+if [[ -s ${DATA_PATH}/check_data/results_check_gefs_fcsts_${CYCLE}.out ]] ; then
+	/bin/rm -rf ${DATA_PATH}/check_data/results_check_gefs_fcsts_${CYCLE}.out
 fi
 
 #-----------------------------------------------------------------------------------------
-# Creating a job to check for downloaded GFS forecasts for a particular cycle (CYCLE)
+# Creating a job to check for downloaded GEFS forecasts for a particular cycle (CYCLE)
 #-----------------------------------------------------------------------------------------
 
-cat > ${DATA_PATH}/check_data/scripts/check_gfs_fcsts_${CYCLE}.sh <<EOF
+cat > ${DATA_PATH}/check_data/scripts/check_gefs_fcsts_${CYCLE}.sh <<EOF
 #!/bin/bash
-#PBS -N check_gfs
-#PBS -o ${DATA_PATH}/check_data/results_check_gfs_fcsts_${CYCLE}.out
-#PBS -e ${OUTPUT_PATH}/out_check_gfs_fcsts_${CYCLE}.err
+#PBS -N check_gefs
+#PBS -o ${DATA_PATH}/check_data/results_check_gefs_fcsts_${CYCLE}.out
+#PBS -e ${OUTPUT_PATH}/out_check_gefs_fcsts_${CYCLE}.err
 #PBS -l select=1:ncpus=1:mem=1GB
 #PBS -q dev
 #PBS -l walltime=00:05:00
 #PBS -A VERF-DEV
 
-cd ${DATA_PATH}/gfs/${CYCLE}
+cd ${DATA_PATH}/gefs/${CYCLE}
 
 echo "*****************************************************************************"
 echo "********Checking for files. If blank until end, all files are present!*******"
@@ -49,13 +49,19 @@ file="${DATA_PATH}/${CASE}_fhrs.txt"
 while IFS= read -r line ; do
 	#echo "Reading the next line of "${file}
         export FHHH=${FHHH_temp}
-	echo $FHHH
+	echo $FHHH	
 
-if [[ ! -s ${DATA_PATH}/gfs/${CYCLE}/gfs.v16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
-	echo "MISSING ${DATA_PATH}/gfs/${CYCLE}/gfs.v16.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2"
+if [[ ! -s ${DATA_PATH}/gefs/${CYCLE}/geavg.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
+	echo "MISSING ${DATA_PATH}/gefs/${CYCLE}/geavg.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2"
 fi
-if [[ ! -s ${DATA_PATH}/gfs/${CYCLE}/gfs.v17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2 ]] ; then
-	echo "MISSING ${DATA_PATH}/gfs/${CYCLE}/gfs.v17.${YYYYMMDD}.t${HH}z.pgrb2.0p25.f${FHHH_same}.grb2"
+if [[ ! -s ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
+	echo "MISSING ${DATA_PATH}/gefs/${CYCLE}/gespr.v12.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2"
+fi
+if [[ ! -s ${DATA_PATH}/gefs/${CYCLE}/geavg.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
+	echo "MISSING ${DATA_PATH}/gefs/${CYCLE}/geavg.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2"
+fi
+if [[ ! -s ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2 ]] ; then
+	echo "MISSING ${DATA_PATH}/gefs/${CYCLE}/gespr.v13.${YYYYMMDD}.t${HH}z.pgrb2a.0p50.f${FHHH_same}.grb2"
 fi
 
 done < ${file}
@@ -70,7 +76,7 @@ EOF
 
 #-----------------------------------------------------------------------
 
-qsub ${DATA_PATH}/check_data/scripts/check_gfs_fcsts_${CYCLE}.sh
+qsub ${DATA_PATH}/check_data/scripts/check_gefs_fcsts_${CYCLE}.sh
 sleep 3
 
 exit

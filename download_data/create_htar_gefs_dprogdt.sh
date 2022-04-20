@@ -28,7 +28,6 @@ while IFS= read -r line ; do
 mkdir -p ${DATA_PATH}/dprogdt/${INIT}/untar_ops
 mkdir -p ${DATA_PATH}/dprogdt/${INIT}/untar_retro
 
-export mem_temp='`echo $line`'
 export mem_same='${mem}'
 
 #################################################################################################

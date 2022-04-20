@@ -49,8 +49,8 @@ export ANL_INC=6 			 # Typically 6 hours
 
 # Select forecast files to download (true/false)
 export GET_FORECASTS=false		 # Set to true if downloading GFS, GEFS, or DPROGDT forecasts are true
-export GET_GFS_FCSTS=false
-export GET_GEFS_FCSTS=true
+export GET_GFS_FCSTS=true
+export GET_GEFS_FCSTS=false
 export GET_GEFS_DPROGDT=false
 
 # Specify which forecast hours to downlaod
@@ -62,10 +62,10 @@ export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt foreca
 
 # If you've already downloaded data, you can check that it exists (true/false)
 export CHECK_DATA=true			 # Set to true if checking for any data are true (analysis, forecasts, dprogdt)
-export CHECK_ANALYSES=false
-export CHECK_GFS_FCST=false
+export CHECK_ANALYSES=true
+export CHECK_GFS_FCST=true
 export CHECK_GEFS_FCST=true
-export CHECK_GEFS_DPROGDT=false
+export CHECK_GEFS_DPROGDT=true
 
 # Specify initialization dates to download (typically 11 dates, ending on the date of the event)
 for longdate in 20220201

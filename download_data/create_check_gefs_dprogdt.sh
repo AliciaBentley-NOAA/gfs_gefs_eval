@@ -10,6 +10,7 @@ echo output path: ${DATA_PATH}/check_data
 #echo fhr_start: ${FHR_START}
 #echo fhr_end: ${FHR_END}
 
+mkdir -p ${DATA_PATH}/output
 mkdir -p ${DATA_PATH}/check_data/scripts
 
 if [[ -s ${DATA_PATH}/check_data/results_check_gefs_dprogdt.out ]] ; then

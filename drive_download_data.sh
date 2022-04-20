@@ -18,7 +18,6 @@ module use /lfs/h1/mdl/nbm/save/apps/modulefiles
 module load python-modules/3.8.6
 export PYTHONPATH="${PYTHONPATH}:/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python"
 counter=0
-
 #===============================================================================================================
 #==============================================  BEGIN CHANGES  ================================================
 #===============================================================================================================
@@ -27,10 +26,10 @@ counter=0
 export CASE='SNODissue'
 
 # Location of your saved GFSv17/GEFSv13 evaluation /download_data directory
-export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/gfs_gefs_eval/download_data'
+export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/download_data'
 
 # Location to store downloaded forecasts/analyses files
-export DATA_PATH='/lfs/h2/emc/ptmp/Alicia.Bentley/gfs_gefs_eval/'${CASE}
+export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}
 
 # Location to write output from submitted download data jobs
 export OUTPUT_PATH=${DATA_PATH}/'output'

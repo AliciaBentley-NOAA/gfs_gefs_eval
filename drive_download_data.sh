@@ -35,7 +35,7 @@ export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}
 export OUTPUT_PATH=${DATA_PATH}/'output'
 
 # Select analysis files to download (true/false)
-export GET_ANALYSES=false           	 # Set to true if downloading GFS, RAP, ST4, or NOHRSC analyses are true
+export GET_ANALYSES=true           	 # Set to true if downloading GFS, RAP, ST4, or NOHRSC analyses are true
 export GET_GFS_ANL=true
 export GET_RAP_ANL=true
 export GET_ST4_ANL=true
@@ -47,10 +47,10 @@ export ANL_END=480                       # Download analyses until 480 hours aft
 export ANL_INC=6 			 # Typically 6 hours
 
 # Select forecast files to download (true/false)
-export GET_FORECASTS=false		 # Set to true if downloading GFS, GEFS, or DPROGDT forecasts are true
+export GET_FORECASTS=true		 # Set to true if downloading GFS, GEFS, or DPROGDT forecasts are true
 export GET_GFS_FCSTS=true
-export GET_GEFS_FCSTS=false
-export GET_GEFS_DPROGDT=false
+export GET_GEFS_FCSTS=true
+export GET_GEFS_DPROGDT=true
 
 # Specify which forecast hours to downlaod
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
@@ -60,7 +60,7 @@ export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYM
 export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt forecasts
 
 # If you've already downloaded data, you can check that it exists (true/false)
-export CHECK_DATA=true			 # Set to true if checking for any data are true (analysis, forecasts, dprogdt)
+export CHECK_DATA=false			 # Set to true if checking for any data are true (analysis, forecasts, dprogdt)
 export CHECK_ANALYSES=true
 export CHECK_GFS_FCST=true
 export CHECK_GEFS_FCST=true
@@ -161,6 +161,13 @@ if [ $CHECK_DATA = true ]; then
 		sleep 3
 		export CHECK_ANALYSES=false
 	fi
+        echo "*********************"
+	if [ $CHECK_GEFS_DPROGDT = true ]; then
+		echo "Create/submit script to check that all GEFS DPROGDT files were downloaded"
+		${SCRIPTS_PATH}/create_check_gefs_dprogdt.sh
+		sleep 3
+		export CHECK_GEFS_DPROGDT=false
+	fi
 	echo "*********************"
 	if [ $CHECK_GFS_FCST = true ]; then
 		echo "Create/submit script to check that all GFS forecasts were downloaded (Init.: ${CYCLE})"
@@ -172,13 +179,6 @@ if [ $CHECK_DATA = true ]; then
 		echo "Create/submit script to check that all GEFS forecasts were downloaded (Init.: ${CYCLE})"
 		${SCRIPTS_PATH}/create_check_gefs_fcsts.sh
 		sleep 3 
-	fi
-	echo "*********************"
-	if [ $CHECK_GEFS_DPROGDT = true ]; then
-		echo "Create/submit script to check that all DPROGDT files were downloaded (Init.: ${CYCLE})"
-		${SCRIPTS_PATH}/create_check_gefs_dprogdt.sh
-		sleep 3
-		export CHECK_GEFS_DPROGDT=false
 	fi
 fi
 

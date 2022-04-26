@@ -73,7 +73,6 @@ fi
 
 counter=$(($counter+1))
 export CYCLE=${longdate}${hour}
-export DOMAIN=${domain}
 
 echo "*********************"
 if [ $PLOT_FORECASTS = true ]; then

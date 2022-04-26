@@ -32,7 +32,7 @@ export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/download_
 export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}
 
 # Location to write output from submitted download data jobs
-export OUTPUT_PATH=${DATA_PATH}/'output'
+export OUTPUT_PATH=${DATA_PATH}'/output'
 
 # Select analysis files to download (true/false)
 export GET_ANALYSES=true           	 # Set to true if downloading GFS, RAP, ST4, or NOHRSC analyses are true
@@ -52,7 +52,7 @@ export GET_GFS_FCSTS=true
 export GET_GEFS_FCSTS=true
 export GET_GEFS_DPROGDT=true
 
-# Specify which forecast hours to downlaod
+# Specify which forecast hours to download
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
 export FHR_END=240                       # Typically 240 hours (10-day forecast)
 export FHR_INC=6                         # Typically 6 hourS
@@ -66,11 +66,11 @@ export CHECK_GFS_FCST=true
 export CHECK_GEFS_FCST=true
 export CHECK_GEFS_DPROGDT=true
 
-# Specify initialization dates to download (typically 11 dates, ending on the date of the event)
+# Specify initialization dates to download (typically 11 dates [YYYYMMDD], ending on the date of the event)
 for longdate in 20220201
 do
 
-# Specify the initialization hours to download (typically 00 and 12)
+# Specify the initialization hours to download on each initalization date (typically 00 and 12)
 for hour in 00 12
 do
 

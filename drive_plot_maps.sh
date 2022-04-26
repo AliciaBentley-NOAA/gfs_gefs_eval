@@ -1,6 +1,11 @@
 #!/bin/bash
 ###################################################
-# Script to download forecasts/analyses from HPSS
+# Script to plot forecast comparisons for official
+# GFS and GEFS evaluations
+#
+# Contributors: Alicia.Bentley@noaa.gov
+# NOAA/NWS/NCEP/Environmental Modeling Center
+# Verification and Products Branch (VPB)
 ###################################################
 module purge
 module load envvar/1.0

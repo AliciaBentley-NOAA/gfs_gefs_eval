@@ -53,7 +53,8 @@ while IFS= read -r line ; do
         /bin/rm -rf ${MAP_PATH}/gfs/${CYCLE}/gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png
 
 	echo "Plotting "${CYCLE}" "${FHHH_same}" over "${DOMAIN}
-	python plot_gfs_slp_4panel.py ${CYCLE} ${FHHH_same}
+	#python plot_gfs_slp_4panel.py 2022042000 24 conus,upper_midwest
+	python plot_gfs_slp_4panel.py ${CYCLE} ${FHHH_same} ${DOMAIN_ARRAY}
         sleep 3
 	mv gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png ${MAP_PATH}/gfs/${CYCLE}/gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png
 

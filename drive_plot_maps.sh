@@ -50,6 +50,9 @@ export FHR_INC=6                         # Typically 6 hourS
 export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYMMDDHH
 export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt forecasts
 
+# Specify the domains to plot. This must be written as: 'domain1,domain2,...' (with no spaces)
+export DOMAIN_ARRAY='conus,upper_midwest'
+
 # Specify initialization dates to plot (typically 11 dates [YYYYMMDD], ending on the date of the event)
 for longdate in 20220201
 do
@@ -82,13 +85,13 @@ if [ $PLOT_FORECASTS = true ]; then
 	fi	
 	echo "*********************"
 	if [ $PLOT_GFS_FCSTS = true ]; then
-	  	echo "Create/submit script to plot ops/retro GFS forecasts (Init.: ${CYCLE})"
+	  	echo "Create/submit script to plot ops/retro GFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
 	      	${SCRIPTS_PATH}/create_plot_gfs_fcsts.sh
 	        sleep 3
 	fi
 	echo "*********************"
 	if [ $PLOT_GEFS_FCSTS = true ]; then
-		echo "Create/submit script to plot ops/retro GEFS forecasts (Init.: ${CYCLE})"
+		echo "Create/submit script to plot ops/retro GEFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
 		${SCRIPTS_PATH}/create_plot_gefs_fcsts.sh
 		sleep 3
 	fi
@@ -98,7 +101,7 @@ if [ $PLOT_FORECASTS = true ]; then
             	python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
 	        mv ${SCRIPTS_PATH}/../${CASE}_init_dates.txt ${MAP_PATH}/${CASE}_init_dates.txt
 		sleep 3
-		echo "Create/submit script to plot ops/retro GEFS members (Valid: ${DPROGDT_VDATE})"
+		echo "Create/submit script to plot ops/retro GEFS members (Valid: ${DPROGDT_VDATE} for ${DOMAIN_ARRAY})"
 		${SCRIPTS_PATH}/create_plot_gefs_dprogdt.sh
 		sleep 3
 		export PLOT_GEFS_DPROGDT=false

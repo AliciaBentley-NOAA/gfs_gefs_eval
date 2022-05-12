@@ -33,19 +33,19 @@ counter=0
 # Specify case study name (e.g., dorian2019)
 export CASE='SNODissue'
 
-# Location of your saved GFSv17/GEFSv13 evaluation /download_data directory
+# Location of your saved GFS/GEFS evaluation /download_data directory
 export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/download_data'
 
 # Location to store downloaded forecasts/analyses files
 export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}'/data'
 
 # Location to write output from submitted download data jobs
-export OUTPUT_PATH=${DATA_PATH}'/../output'
+export OUTPUT_PATH=${DATA_PATH}'/output'
 
 # Select which sections of code to execute (YES/NO)
-export GET_ANALYSES=NO
-export GET_FORECASTS=NO
-export CHECK_DATA=YES 
+export GET_ANALYSES=YES
+export GET_FORECASTS=YES
+export CHECK_DATA=NO
 
 # *****************************************
 # ****This is the GET_ANALYSES section*****
@@ -138,7 +138,7 @@ if [ $GET_ANALYSES = YES ]; then
    		${SCRIPTS_PATH}/create_htar_nohrsc_anl.sh
    		sleep 3
 	fi
-export GET_ANALYSES=false
+export GET_ANALYSES=NO
 fi
 
 echo "*********************"
@@ -170,7 +170,7 @@ if [ $GET_FORECASTS = YES ]; then
 		echo "Create/submit script to download ops/retro GEFS members (Valid: ${DPROGDT_VDATE})"
 		${SCRIPTS_PATH}/create_htar_gefs_dprogdt.sh
 		sleep 3
-		export GET_GEFS_DPROGDT=false
+		export GET_GEFS_DPROGDT=NO
 	fi
 fi
 
@@ -180,14 +180,14 @@ if [ $CHECK_DATA = YES ]; then
 		echo "Create/submit script to check that all analysis files were downloaded"
 		${SCRIPTS_PATH}/create_check_analyses.sh
 		sleep 3
-		export CHECK_ANALYSES=false
+		export CHECK_ANALYSES=NO
 	fi
         echo "*********************"
 	if [ $CHECK_GEFS_DPROGDT = YES ]; then
 		echo "Create/submit script to check that all GEFS DPROGDT files were downloaded"
 		${SCRIPTS_PATH}/create_check_gefs_dprogdt.sh
 		sleep 3
-		export CHECK_GEFS_DPROGDT=false
+		export CHECK_GEFS_DPROGDT=NO
 	fi
 	echo "*********************"
 	if [ $CHECK_GFS_FCST = YES ]; then

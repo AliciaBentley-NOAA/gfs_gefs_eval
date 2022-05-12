@@ -27,37 +27,48 @@ counter=0
 #==============================================  BEGIN CHANGES  ================================================
 #===============================================================================================================
 
-# Specify case name, forecast length, and forecast timestep (increment)
+# ********************************************
+# ****Specify case name and data/map paths****
+# ********************************************
+# Specify case study name (e.g., dorian2019)
 export CASE='SNODissue'
 
-# Location of your saved GFSv17/GEFSv13 evaluation /plot_maps directory
+# Location of your saved GFS/GEFS evaluation /plot_maps directory
 export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/plot_maps'
 
-# Location of downloaded forecasts/analyses files
-export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}
+# Location of downloaded forecast/analysis files
+export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}'/data'
 
 # Location to plot maps
-export MAP_PATH=${DATA_PATH}'/maps'
+export MAP_PATH=${DATA_PATH}'/../maps'
 
 # Location to write output from submitted plot_maps jobs
 export OUTPUT_PATH=${MAP_PATH}'/output'
 
-# Select forecast files to download (true/false)
-export PLOT_FORECASTS=true		 # Set to true if plotting GFS, GEFS, or DPROGDT forecasts are true
-export PLOT_GFS_FCSTS=true
-export PLOT_GEFS_FCSTS=false
-export PLOT_GEFS_DPROGDT=false
+# *************************************************************
+# ****Specify which models to plot, forecast hours, domains****
+# *************************************************************
+# Select which models to plot (YES/NO)
+export PLOT_GFS_FCSTS=YES
+export PLOT_GEFS_FCSTS=NO
+export PLOT_GEFS_DPROGDT=NO
 
-# Specify which forecast hours to plot
+# Select which forecast hours to plot (applies to PLOT_GFS_FCSTS and PLOT_GEFS_FCSTS)
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
-export FHR_END=24                       # Typically 240 hours (10-day forecast)
+export FHR_END=24 	                 # Typically 240 hours (10-day forecast)
 export FHR_INC=6                         # Typically 6 hourS
+
+# Select DPROGDT valid date and increment to plot (applies to PLOT_GEFS_DPROGDT)
 export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYMMDDHH
 export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt forecasts
 
 # Specify the domains to plot. This must be written as: 'domain1,domain2,...' (with no spaces)
-export DOMAIN_ARRAY='conus,upper_midwest'
+# Example input: 'conus,northeast'
+export DOMAIN_ARRAY='conus,northeast'
 
+# *****************************************
+# ****Select initialization dates/hours****
+# *****************************************
 # Specify initialization dates to plot (typically 11 dates [YYYYMMDD], ending on the date of the event)
 for longdate in 20220201
 do
@@ -80,36 +91,34 @@ counter=$(($counter+1))
 export CYCLE=${longdate}${hour}
 
 echo "*********************"
-if [ $PLOT_FORECASTS = true ]; then
-	if [ $counter = 1 ]; then
-		echo "Create list of forecast hours (${FHR_START} ${FHR_END} ${FHR_INC})"
-      		python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
-        	mv ${SCRIPTS_PATH}/../${CASE}_fhrs.txt ${MAP_PATH}/${CASE}_fhrs.txt
-		sleep 3
-	fi	
-	echo "*********************"
-	if [ $PLOT_GFS_FCSTS = true ]; then
-	  	echo "Create/submit script to plot ops/retro GFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
-	      	${SCRIPTS_PATH}/create_plot_gfs_fcsts.sh
-	        sleep 3
-	fi
-	echo "*********************"
-	if [ $PLOT_GEFS_FCSTS = true ]; then
-		echo "Create/submit script to plot ops/retro GEFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
-		${SCRIPTS_PATH}/create_plot_gefs_fcsts.sh
-		sleep 3
-	fi
-	echo "*********************"
-	if [ $PLOT_GEFS_DPROGDT = true ]; then
-      		echo "Creating a list of intialization times for GEFS dprog/dt"
-            	python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
-	        mv ${SCRIPTS_PATH}/../${CASE}_init_dates.txt ${MAP_PATH}/${CASE}_init_dates.txt
-		sleep 3
-		echo "Create/submit script to plot ops/retro GEFS members (Valid: ${DPROGDT_VDATE} for ${DOMAIN_ARRAY})"
-		${SCRIPTS_PATH}/create_plot_gefs_dprogdt.sh
-		sleep 3
-		export PLOT_GEFS_DPROGDT=false
-	fi
+if [ $counter = 1 ]; then
+	echo "Create list of forecast hours (${FHR_START} ${FHR_END} ${FHR_INC})"
+      	python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
+        mv ${SCRIPTS_PATH}/../${CASE}_fhrs.txt ${MAP_PATH}/${CASE}_fhrs.txt
+	sleep 3
+fi	
+echo "*********************"
+if [ $PLOT_GFS_FCSTS = YES ]; then
+	echo "Create/submit script to plot ops/retro GFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
+	${SCRIPTS_PATH}/create_plot_gfs_fcsts.sh
+	sleep 3
+fi
+echo "*********************"
+if [ $PLOT_GEFS_FCSTS = YES ]; then
+	echo "Create/submit script to plot ops/retro GEFS forecasts (Init.: ${CYCLE} for ${DOMAIN_ARRAY})"
+	${SCRIPTS_PATH}/create_plot_gefs_fcsts.sh
+	sleep 3
+fi
+echo "*********************"
+if [ $PLOT_GEFS_DPROGDT = YES ]; then
+      	echo "Creating a list of intialization times for GEFS dprog/dt"
+       	python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
+	mv ${SCRIPTS_PATH}/../${CASE}_init_dates.txt ${MAP_PATH}/${CASE}_init_dates.txt
+	sleep 3
+	echo "Create/submit script to plot ops/retro GEFS members (Valid: ${DPROGDT_VDATE} for ${DOMAIN_ARRAY})"
+	${SCRIPTS_PATH}/create_plot_gefs_dprogdt.sh
+	sleep 3
+	export PLOT_GEFS_DPROGDT=NO
 fi
 
 done

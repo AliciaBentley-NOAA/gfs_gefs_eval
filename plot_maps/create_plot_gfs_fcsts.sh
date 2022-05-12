@@ -32,7 +32,7 @@ cat > ${MAP_PATH}/gfs/${CYCLE}/scripts/plot_gfs_fcst.sh <<EOF
 #PBS -N gfs_plot
 #PBS -o ${OUTPUT_PATH}/out_plot_gfs_fcst_${CYCLE}.out
 #PBS -e ${OUTPUT_PATH}/out_plot_gfs_fcst_${CYCLE}.err
-#PBS -l select=1:ncpus=1:mem=4GB
+#PBS -l select=1:ncpus=1:mem=100GB
 #PBS -q dev
 #PBS -l walltime=02:00:00
 #PBS -A VERF-DEV
@@ -40,7 +40,7 @@ cat > ${MAP_PATH}/gfs/${CYCLE}/scripts/plot_gfs_fcst.sh <<EOF
 cd ${MAP_PATH}/gfs/${CYCLE}/scripts
 cp ${SCRIPTS_PATH}/plot_gfs*.py .
 
-/bin/rm -rf ${MAP_PATH}/plot_gfs_fcst_${CYCLE}_done
+#/bin/rm -rf ${MAP_PATH}/plot_gfs_fcst_${CYCLE}_done
 
 COUNTER=0
 
@@ -53,16 +53,18 @@ while IFS= read -r line ; do
         /bin/rm -rf ${MAP_PATH}/gfs/${CYCLE}/gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png
 
 	echo "Plotting "${CYCLE}" "${FHHH_same}" over "${DOMAIN}
-	#python plot_gfs_slp_4panel.py 2022042000 24 conus,upper_midwest
-	python plot_gfs_slp_4panel.py ${CYCLE} ${FHHH_same} ${DOMAIN_ARRAY}
+	#python plot_gfs_slp_4panel.py 2022042000 24 conus,upper_midwest /path/to/data SNODissue 0
+	python plot_gfs_slp_4panel.py ${CYCLE} ${FHHH_same} ${DOMAIN_ARRAY} ${DATA_PATH} ${CASE} ${COUNTER_same}
         sleep 3
-	mv gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png ${MAP_PATH}/gfs/${CYCLE}/gfs_${DOMAIN}_slp_${CASE}_${COUNTER_same}.png
+	#mv gfs_*_slp_${CASE}_${COUNTER_same}.png ${MAP_PATH}/gfs/${CYCLE}/.
 
 	COUNTER=${COUNTER_update}
 
 done < ${file}
-	
-touch ${MAP_PATH}/plot_gfs_fcst_${CYCLE}_done
+
+ mv gfs_*_slp_${CASE}_*.png ${MAP_PATH}/gfs/${CYCLE}/.
+
+#touch ${MAP_PATH}/plot_gfs_fcst_${CYCLE}_done
 
 exit
 

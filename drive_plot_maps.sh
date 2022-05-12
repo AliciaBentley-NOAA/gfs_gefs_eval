@@ -50,7 +50,7 @@ export PLOT_GEFS_DPROGDT=false
 
 # Specify which forecast hours to plot
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
-export FHR_END=240                       # Typically 240 hours (10-day forecast)
+export FHR_END=24                       # Typically 240 hours (10-day forecast)
 export FHR_INC=6                         # Typically 6 hourS
 export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYMMDDHH
 export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt forecasts

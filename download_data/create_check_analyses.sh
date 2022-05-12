@@ -58,8 +58,8 @@ while IFS= read -r line ; do
 	export VHH=${VHH_temp}
 	echo $VALID $VYYYYMMDD $VHH
 
-if [[ ! -s ${DATA_PATH}/analyses/gfs.${VYYYYMMDD_same}.t${VHH_same}z.pgrb2.0p25.f000.grb2 ]] ; then
-	echo "MISSING ${DATA_PATH}/analyses/gfs.${VYYYYMMDD_same}.t${VHH_same}z.pgrb2.0p25.f000.grb2"
+if [[ ! -s ${DATA_PATH}/analyses/gfs.${VYYYYMMDD_same}.t${VHH_same}z.pgrb2.0p25.anl.grb2 ]] ; then
+	echo "MISSING ${DATA_PATH}/analyses/gfs.${VYYYYMMDD_same}.t${VHH_same}z.pgrb2.0p25.anl.grb2"
 fi
 if [[ ! -s ${DATA_PATH}/analyses/rap.${VYYYYMMDD_same}.t${VHH_same}z.awip32f00.grb2 ]] ; then
 	echo "MISSING ${DATA_PATH}/analyses/rap.${VYYYYMMDD_same}.t${VHH_same}z.awip32f00.grb2"

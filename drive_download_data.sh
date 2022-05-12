@@ -27,50 +27,66 @@ counter=0
 #==============================================  BEGIN CHANGES  ================================================
 #===============================================================================================================
 
-# Specify case name, forecast length, and forecast timestep (increment)
+# ******************************************************
+# ****Specify case name, paths, sections to execute*****
+# ******************************************************
+# Specify case study name (e.g., dorian2019)
 export CASE='SNODissue'
 
 # Location of your saved GFSv17/GEFSv13 evaluation /download_data directory
 export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/download_data'
 
 # Location to store downloaded forecasts/analyses files
-export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}
+export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}'/data'
 
 # Location to write output from submitted download data jobs
-export OUTPUT_PATH=${DATA_PATH}'/output'
+export OUTPUT_PATH=${DATA_PATH}'/../output'
 
-# Select analysis files to download (true/false)
-export GET_ANALYSES=true           	 # Set to true if downloading GFS, RAP, ST4, or NOHRSC analyses are true
-export GET_GFS_ANL=true
-export GET_RAP_ANL=true
-export GET_ST4_ANL=true
-export GET_NOHRSC_ANL=true
+# Select which sections of code to execute (YES/NO)
+export GET_ANALYSES=NO
+export GET_FORECASTS=NO
+export CHECK_DATA=YES 
 
-# Specify which analyses you want to download
-export ANL_START=0 			 # Start downloading analysis files for the first initialization date
-export ANL_END=480                       # Download analyses until 480 hours after first init date (10 days after last 10-day forecast)
-export ANL_INC=6 			 # Typically 6 hours
+# *****************************************
+# ****This is the GET_ANALYSES section*****
+# *****************************************
+# Select which analysis types to download (YES/NO)
+export GET_GFS_ANL=YES
+export GET_RAP_ANL=YES
+export GET_ST4_ANL=YES
+export GET_NOHRSC_ANL=YES
+# Select analyses start, end, and increment to download
+export ANL_START=0 			 # Start downloading analysis files for the first initialization date if set to 0
+export ANL_END=264                       # Download analyses until 480 hours after first init date (i.e., 10 days after last 10-day forecast)
+export ANL_INC=6 			 # Typically 6 hours timestep between analysis files
 
-# Select forecast files to download (true/false)
-export GET_FORECASTS=true		 # Set to true if downloading GFS, GEFS, or DPROGDT forecasts are true
-export GET_GFS_FCSTS=true
-export GET_GEFS_FCSTS=true
-export GET_GEFS_DPROGDT=true
-
-# Specify which forecast hours to download
+# ******************************************
+# ****This is the GET_FORECASTS section*****
+# ******************************************
+# Select which model forecasts to download (YES/NO)
+export GET_GFS_FCSTS=YES
+export GET_GEFS_FCSTS=YES
+export GET_GEFS_DPROGDT=YES
+# Select forecast start, end, and increment to download (applies to GFS_FCSTS and GEFS_FCSTS)
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
 export FHR_END=240                       # Typically 240 hours (10-day forecast)
-export FHR_INC=6                         # Typically 6 hourS
-export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYMMDDHH
-export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt forecasts
+export FHR_INC=6                         # Typically 6-hour timestep between forecast files
+# Select DPROGDT valid date and increment to download (applies to GEFS_DPROGDT)
+export DPROGDT_VDATE=2022021100    	 # The date and hour of the main event; YYYYMMDDHH
+export DPROGDT_INC=24              	 # Typically 24-hour timestep between dprogdt forecasts
 
-# If you've already downloaded data, you can check that it exists (true/false)
-export CHECK_DATA=false			 # Set to true if checking for any data are true (analysis, forecasts, dprogdt)
-export CHECK_ANALYSES=true
-export CHECK_GFS_FCST=true
-export CHECK_GEFS_FCST=true
-export CHECK_GEFS_DPROGDT=true
+# ***************************************
+# ****This is the CHECK_DATA section*****
+# ***************************************
+# If you've downloaded data, you can check that it exists (YES/NO)
+export CHECK_ANALYSES=YES
+export CHECK_GFS_FCST=YES
+export CHECK_GEFS_FCST=YES
+export CHECK_GEFS_DPROGDT=YES
 
+# ******************************************
+# ****Select initialization dates/hours*****
+# ******************************************
 # Specify initialization dates to download (typically 11 dates [YYYYMMDD], ending on the date of the event)
 for longdate in 20220201
 do
@@ -93,31 +109,31 @@ counter=$(($counter+1))
 export CYCLE=${longdate}${hour}
 
 echo "*********************"
-if [ $GET_ANALYSES = true ]; then
+if [ $GET_ANALYSES = YES ]; then
         echo "Creating lists of valid dates (for analysis files)"
         python ${SCRIPTS_PATH}/list_valid_dates.py ${CYCLE} ${ANL_START} ${ANL_END} ${ANL_INC} ${CASE}
         mv ${SCRIPTS_PATH}/../${CASE}_valid_dates.txt ${DATA_PATH}/${CASE}_valid_dates.txt
 	sleep 3
 	echo "*********************"
-	if [ $GET_GFS_ANL = true ]; then
+	if [ $GET_GFS_ANL = YES ]; then
    		echo "Copy/submit script to download GFS analysis data"
    		${SCRIPTS_PATH}/create_htar_gfs_anl.sh
    		sleep 3
 	fi
 	echo "*********************"
-	if [ $GET_RAP_ANL = true ]; then
+	if [ $GET_RAP_ANL = YES ]; then
    		echo "Copy/submit script to download RAP analysis data"
    		${SCRIPTS_PATH}/create_htar_rap_anl.sh
    		sleep 3
 	fi
 	echo "*********************"
-	if [ $GET_ST4_ANL = true ]; then
+	if [ $GET_ST4_ANL = YES ]; then
    		echo "Copy/submit script to download Stage-IV analysis data"
    		${SCRIPTS_PATH}/create_htar_st4_anl.sh
    		sleep 3
 	fi
 	echo "*********************"
-	if [ $GET_NOHRSC_ANL = true ]; then
+	if [ $GET_NOHRSC_ANL = YES ]; then
    		echo "Copy/submit script to download NOHRSC analysis data"
    		${SCRIPTS_PATH}/create_htar_nohrsc_anl.sh
    		sleep 3
@@ -126,7 +142,7 @@ export GET_ANALYSES=false
 fi
 
 echo "*********************"
-if [ $GET_FORECASTS = true ]; then
+if [ $GET_FORECASTS = YES ]; then
 	if [ $counter = 1 ]; then
 		echo "Create list of forecast hours (${FHR_START} ${FHR_END} ${FHR_INC})"
       		python ${SCRIPTS_PATH}/list_fhrs.py ${CYCLE} ${FHR_START} ${FHR_END} ${FHR_INC} ${CASE}
@@ -134,19 +150,19 @@ if [ $GET_FORECASTS = true ]; then
 		sleep 3
 	fi	
 	echo "*********************"
-	if [ $GET_GFS_FCSTS = true ]; then
+	if [ $GET_GFS_FCSTS = YES ]; then
 	  	echo "Create/submit script to download ops/retro GFS forecasts (Init.: ${CYCLE})"
 	      	${SCRIPTS_PATH}/create_htar_gfs_fcsts.sh
 	        sleep 3
 	fi
 	echo "*********************"
-	if [ $GET_GEFS_FCSTS = true ]; then
+	if [ $GET_GEFS_FCSTS = YES ]; then
 		echo "Create/submit script to download ops/retro GEFS forecasts (Init.: ${CYCLE})"
 		${SCRIPTS_PATH}/create_htar_gefs_fcsts.sh
 		sleep 3
 	fi
 	echo "*********************"
-	if [ $GET_GEFS_DPROGDT = true ]; then
+	if [ $GET_GEFS_DPROGDT = YES ]; then
       		echo "Creating a list of intialization times for GEFS dprog/dt"
             	python ${SCRIPTS_PATH}/list_init_dates.py ${DPROGDT_VDATE} ${FHR_START} ${FHR_END} ${DPROGDT_INC} ${CASE}
 	        mv ${SCRIPTS_PATH}/../${CASE}_init_dates.txt ${DATA_PATH}/${CASE}_init_dates.txt
@@ -159,28 +175,28 @@ if [ $GET_FORECASTS = true ]; then
 fi
 
 echo "*********************"
-if [ $CHECK_DATA = true ]; then
-	if [ $CHECK_ANALYSES = true ]; then
+if [ $CHECK_DATA = YES ]; then
+	if [ $CHECK_ANALYSES = YES ]; then
 		echo "Create/submit script to check that all analysis files were downloaded"
 		${SCRIPTS_PATH}/create_check_analyses.sh
 		sleep 3
 		export CHECK_ANALYSES=false
 	fi
         echo "*********************"
-	if [ $CHECK_GEFS_DPROGDT = true ]; then
+	if [ $CHECK_GEFS_DPROGDT = YES ]; then
 		echo "Create/submit script to check that all GEFS DPROGDT files were downloaded"
 		${SCRIPTS_PATH}/create_check_gefs_dprogdt.sh
 		sleep 3
 		export CHECK_GEFS_DPROGDT=false
 	fi
 	echo "*********************"
-	if [ $CHECK_GFS_FCST = true ]; then
+	if [ $CHECK_GFS_FCST = YES ]; then
 		echo "Create/submit script to check that all GFS forecasts were downloaded (Init.: ${CYCLE})"
 		${SCRIPTS_PATH}/create_check_gfs_fcsts.sh
 		sleep 3
 	fi
 	echo "*********************"
-	if [ $CHECK_GEFS_FCST = true ]; then
+	if [ $CHECK_GEFS_FCST = YES ]; then
 		echo "Create/submit script to check that all GEFS forecasts were downloaded (Init.: ${CYCLE})"
 		${SCRIPTS_PATH}/create_check_gefs_fcsts.sh
 		sleep 3 

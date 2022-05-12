@@ -37,7 +37,7 @@ export GFS_CHANGE_DATE1=2017072000
 
 if ((${VALID} >= ${GFS_CHANGE_DATE4})) ; then
 	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_prod_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
-        GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.f000
+        GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.anl
 
 elif (((${VALID} >= ${GFS_CHANGE_DATE3}) && (${VALID} < ${GFS_CHANGE_DATE4}))) ; then
 	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_prod_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
@@ -75,15 +75,15 @@ cat > ${DATA_PATH}/analyses/untar_gfs/htar_gfs_anl_${VALID}.sh <<EOF
 cd ${DATA_PATH}/analyses/untar_gfs
 
 #/bin/rm -rf ${DATA_PATH}/htar_gfs_anl_${VALID}_done
-#/bin/rm -rf ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.f000.grb2
+#/bin/rm -rf ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.anl.grb2
 
-if [[ -s ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.f000.grb2 ]] ; then
+if [[ -s ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.anl.grb2 ]] ; then
 	echo ${VALID}" GFS analysis exists"
 else
 	echo "Extracting "${VALID}" GFS analysis"
 	htar -xvf $GFS_ARCHIVE $GFS_FILENAME
 	sleep 3
-	mv $GFS_FILENAME ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.f000.grb2
+	mv $GFS_FILENAME ${DATA_PATH}/analyses/gfs.${VYYYYMMDD}.t${VHH}z.pgrb2.0p25.anl.grb2
 fi
 
 #touch ${DATA_PATH}/htar_gfs_anl_${VALID}_done

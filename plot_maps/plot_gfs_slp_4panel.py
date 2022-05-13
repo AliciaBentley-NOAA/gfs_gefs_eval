@@ -270,7 +270,7 @@ print(("%.3f seconds to read all messages") % t3a)
 
 # colors for difference plots, only need to define once
 #difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','paleturquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red','firebrick']
-difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','paleturquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red','firebrick']
+difcolors = ['#094296','#0f66a8','#158ec2','#42b3e3','#79d5fc','#b0e7ff','white','white','#ffea94','#fcc75b','#fca22b','#f76931','#f73a25','#b02d1e']
 difcolors2 = ['white']
 difcolors3 = ['blue','dodgerblue','turquoise','white','white','#EEEE00','darkorange','red']
 
@@ -343,6 +343,17 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)
+  elif dom == 'northeast':
+    fig = plt.figure(figsize=(8,8))
+    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
+    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
+            false_easting=0.0,false_northing=0.0, secant_latitudes=None,
+            standard_parallels=None,globe=None)
+    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
+    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
   else:
     fig = plt.figure(figsize=(9,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
@@ -448,10 +459,13 @@ def plot_set_1():
   # Wind barb density settings
   if dom == 'conus':
     skip = 100
+    thick = 0.6
   elif dom == 'northeast':
     skip = 40
+    thick = 0.8
   else:
     skip = 30
+    thick = 0.8
   barblength = 3.5
 
   units = 'mb'
@@ -475,7 +489,7 @@ def plot_set_1():
   cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1)
   cs_1.cmap.set_under('darkblue')
   cs_1.cmap.set_over('darkred')
-  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
@@ -485,7 +499,7 @@ def plot_set_1():
   cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2)
   cs_2.cmap.set_under('darkblue')
   cs_2.cmap.set_over('darkred')
-  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
@@ -505,7 +519,7 @@ def plot_set_1():
   cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif)
 #  cs_4.cmap.set_under('gray')
 #  cs_4.cmap.set_over('gray')
-  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)

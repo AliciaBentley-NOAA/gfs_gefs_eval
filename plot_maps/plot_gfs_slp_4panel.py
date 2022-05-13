@@ -269,6 +269,7 @@ t3a = round(t2a-t1a, 3)
 print(("%.3f seconds to read all messages") % t3a)
 
 # colors for difference plots, only need to define once
+#difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','paleturquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red','firebrick']
 difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','paleturquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red','firebrick']
 difcolors2 = ['white']
 difcolors3 = ['blue','dodgerblue','turquoise','white','white','#EEEE00','darkorange','red']
@@ -321,8 +322,6 @@ def create_figure():
     yextent=-282791
 
   # create figure and axes instances
-  fig = plt.figure(figsize=(9,8))
-  gs = GridSpec(9,8,wspace=0.0,hspace=0.0)
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
   par = 1
 
@@ -334,16 +333,28 @@ def create_figure():
 
   # set up the map background with cartopy
   if dom == 'conus':
+    fig = plt.figure(figsize=(9,7))
+    gs = GridSpec(18,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon-1,urcrnrlon-6,llcrnrlat,urcrnrlat+1]
+    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
+            false_easting=0.0,false_northing=0.0, secant_latitudes=None,
+            standard_parallels=None,globe=None)
+    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
+    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)
   else:
+    fig = plt.figure(figsize=(9,8))
+    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
-  myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
+    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
           false_easting=0.0,false_northing=0.0, secant_latitudes=None, 
           standard_parallels=None,globe=None)
-  ax1 = fig.add_subplot(gs[0:4,0:4], projection=myproj)
-  ax2 = fig.add_subplot(gs[0:4,4:], projection=myproj)
-  ax3 = fig.add_subplot(gs[5:,0:4], projection=myproj)
-  ax4 = fig.add_subplot(gs[5:,4:], projection=myproj)
+    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
+    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
+
   ax1.set_extent(extent)
   ax2.set_extent(extent)
   ax3.set_extent(extent)
@@ -464,7 +475,7 @@ def plot_set_1():
   cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1)
   cs_1.cmap.set_under('darkblue')
   cs_1.cmap.set_over('darkred')
-  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
@@ -474,7 +485,7 @@ def plot_set_1():
   cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2)
   cs_2.cmap.set_under('darkblue')
   cs_2.cmap.set_over('darkred')
-  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
@@ -494,7 +505,7 @@ def plot_set_1():
   cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif)
 #  cs_4.cmap.set_under('gray')
 #  cs_4.cmap.set_over('gray')
-  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=0.5,transform=transform)
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)

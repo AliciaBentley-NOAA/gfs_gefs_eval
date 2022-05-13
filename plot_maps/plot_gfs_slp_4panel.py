@@ -19,6 +19,7 @@ import ncepy
 from scipy import ndimage
 from netCDF4 import Dataset
 import cartopy
+import copy
 
 #--------------Set some classes------------------------#
 # Make Python process pools non-daemonic
@@ -142,6 +143,16 @@ def extrema(mat,mode='wrap',window=100):
     # (mat == mx) true if pixel is equal to the local max
     return np.nonzero(mat == mx)
 
+def __copy__(self):
+    #Create new object with the same class and update attributes
+    #If object is initialized, copy the elements of _lut list
+    cls = self.__class__
+    newCMapObj = cls.__new__(cls)
+    newCMapObj.__dict__.update(self.__dict__)
+    if self._isinit:
+        newCMapObj._lut = np.copy(self._lut)
+    return newCMapObj
+
 #-------------------------------------------------------#
 
 # Necessary to generate figs when not running an Xserver (e.g. via PBS)
@@ -183,9 +194,8 @@ vcyc = str(hour).zfill(2)
 # Define the input files
 data1 = grib2io.open(sys.argv[4]+'/gfs/'+ymd+cyc+'/gfs.v16.'+ymd+'.t'+cyc+'z.pgrb2.0p25.f'+fhour+'.grb2')
 data2 = grib2io.open(sys.argv[4]+'/gfs/'+ymd+cyc+'/gfs.v17.'+ymd+'.t'+cyc+'z.pgrb2.0p25.f'+fhour+'.grb2')
-data3 = grib2io.open(sys.argv[4]+'/gfs/'+ymd+cyc+'/gfs.v16.'+ymd+'.t'+cyc+'z.pgrb2.0p25.f'+fhour+'.grb2')
+#data2 = grib2io.open(sys.argv[4]+'/analyses/gfs.'+vymd+'.t'+vcyc+'z.pgrb2.0p25.anl.grb2')
 data4 = grib2io.open(sys.argv[4]+'/analyses/gfs.'+vymd+'.t'+vcyc+'z.pgrb2.0p25.anl.grb2')
-#data4 = grib2io.open(sys.argv[4]+'/gfs/'+ymd+cyc+'/gfs.v17.'+ymd+'.t'+cyc+'z.pgrb2.0p25.f'+fhour+'.grb2')
 
 #print(data1[1])
 msg = data1[1][0] 	# msg is a Grib2Message object
@@ -236,7 +246,6 @@ lat_shift = lat
 lon_shift = lon
 
 # Specify plotting domains
-#domains = ['conus','boston_nyc','central','colorado','la_vegas','mid_atlantic','north_central','northeast','northwest','ohio_valley','south_central','southeast','sf_bay_area','seattle_portland','southwest','upper_midwest']
 str = str(sys.argv[3])
 domains = str.split(',')
 print(domains)
@@ -249,18 +258,9 @@ t1a = time.perf_counter()
 # MSLP
 slp_1 = data1.select(shortName='PRMSL',level='mean sea level')[0].data() * 0.01
 slp_2 = data2.select(shortName='PRMSL',level='mean sea level')[0].data() * 0.01
-slp_3 = data3.select(shortName='PRMSL',level='mean sea level')[0].data() * 0.01
 slp_4 = data4.select(shortName='PRMSL',level='mean sea level')[0].data() * 0.01
-
-# 10-m wind speed
-#uwind_1 = data1.select(shortName='UGRD',level='10 m above ground')[0].data() * 1.94384
-#vwind_1 = data1.select(shortName='VGRD',level='10 m above ground')[0].data() * 1.94384
-#uwind_2 = data2.select(shortName='UGRD',level='10 m above ground')[0].data() * 1.94384
-#vwind_2 = data2.select(shortName='VGRD',level='10 m above ground')[0].data() * 1.94384
-#uwind_3 = data3.select(shortName='UGRD',level='10 m above ground')[0].data() * 1.94384
-#vwind_3 = data3.select(shortName='VGRD',level='10 m above ground')[0].data() * 1.94384
-#uwind_4 = data4.select(shortName='UGRD',level='10 m above ground')[0].data() * 1.94384
-#vwind_4 = data4.select(shortName='VGRD',level='10 m above ground')[0].data() * 1.94384
+slp_dif_fcst = slp_2 - slp_1
+slp_dif_anl = slp_2 - slp_4
 
 #print(slp_1)
 
@@ -269,7 +269,7 @@ t3a = round(t2a-t1a, 3)
 print(("%.3f seconds to read all messages") % t3a)
 
 # colors for difference plots, only need to define once
-difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red']
+difcolors = ['blue','#1874CD','dodgerblue','deepskyblue','turquoise','paleturquoise','white','white','#EEEE00','#EEC900','darkorange','orangered','red','firebrick']
 difcolors2 = ['white']
 difcolors3 = ['blue','dodgerblue','turquoise','white','white','#EEEE00','darkorange','red']
 
@@ -350,8 +350,8 @@ def create_figure():
   ax4.set_extent(extent)
   axes = [ax1,ax2,ax3,ax4]
 
-  fline_wd = 0.5  # line width
-  fline_wd_lakes = 0.35  # line width
+  fline_wd = 0.3  # line width
+  fline_wd_lakes = 0.3  # line width
   falpha = 0.5    # transparency
 
   # natural_earth
@@ -385,19 +385,19 @@ def create_figure():
 #  ax1.add_feature(land)
   ax1.add_feature(lakes)
   ax1.add_feature(states)
-#  ax1.add_feature(borders)
+  ax1.add_feature(borders)
   ax1.add_feature(coastlines)
   ax2.add_feature(lakes)
   ax2.add_feature(states)
-#  ax2.add_feature(borders)
+  ax2.add_feature(borders)
   ax2.add_feature(coastlines)
   ax3.add_feature(lakes)
   ax3.add_feature(states)
-#  ax3.add_feature(borders)
+  ax3.add_feature(borders)
   ax3.add_feature(coastlines)
   ax4.add_feature(lakes)
   ax4.add_feature(states)
-#  ax4.add_feature(borders)
+  ax4.add_feature(borders)
   ax4.add_feature(coastlines)
 
   # Map/figure has been set up here, save axes instances for use again later
@@ -446,8 +446,12 @@ def plot_set_1():
   units = 'mb'
   clevs = [972,976,980,984,988,992,996,1000,1004,1008,1012,1016,1020,1024,1028,1032,1036,1040,1044,1048,1052]
   clevs_thin = [976,984,992,1000,1008,1016,1024,1032,1040,1048]
-  clevsdif = [-12,-10,-8,-6,-4,-2,0,2,4,6,8,10,12]
+  clevsdif = [-14,-12,-10,-8,-6,-4,-2,0,2,4,6,8,10,12,14]
   cm = plt.cm.Spectral_r
+  cm1 = copy.copy(cm)
+  cm2 = copy.copy(cm)
+  cm3 = copy.copy(cm)
+  cm4 = copy.copy(cm)
   cmdif = matplotlib.colors.ListedColormap(difcolors)
   norm = matplotlib.colors.BoundaryNorm(clevs, cm.N)
   normdif = matplotlib.colors.BoundaryNorm(clevsdif, cmdif.N)
@@ -457,40 +461,44 @@ def plot_set_1():
   xmax = int(round(xmax))
   ymax = int(round(ymax))
 
-  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm)
-#  cs_1.cmap.set_under('white',alpha=0.)
-#  cs_1.cmap.set_over('black')
+  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1)
+  cs_1.cmap.set_under('darkblue')
+  cs_1.cmap.set_over('darkred')
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
   ax1.text(.5,1.03,'GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax1.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax1.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
 
-  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm)
-#  cs_2.cmap.set_under('white',alpha=0.)
-#  cs_2.cmap.set_over('black')
+  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2)
+  cs_2.cmap.set_under('darkblue')
+  cs_2.cmap.set_over('darkred')
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
   ax2.text(.5,1.03,'GFSv17 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax2.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax2.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
 
-  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_3,vmin=5,norm=norm,transform=transform,cmap=cm)
-#  cs_3.cmap.set_under('white',alpha=0.)
-#  cs_3.cmap.set_over('black')
-  cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
+#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_3,vmin=5,norm=norm,transform=transform,cmap=cm3)
+  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_dif_fcst,transform=transform,cmap=cmdif,norm=normdif)
+  cs_3.cmap.set_under('darkblue')
+  cs_3.cmap.set_over('darkred')
+  cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar3.set_label(units,fontsize=6)
   cbar3.ax.tick_params(labelsize=6)
-  ax3.text(.5,1.03,'GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
+  ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP (shaded; '+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
 
-  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_4,vmin=5,norm=norm,transform=transform,cmap=cm)
-#  cs_4.cmap.set_under('white',alpha=0.)
-#  cs_4.cmap.set_over('black')
-  cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
+  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif)
+#  cs_4.cmap.set_under('gray')
+#  cs_4.cmap.set_over('gray')
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=0.45,transform=transform)
+  cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)
-  ax4.text(.5,1.03,'GFS Analysis MSLP ('+units+') \n Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax4.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
+  ax4.text(.5,1.03,'GFSv17 - GFS Anl. MSLP (fill), GFS Anl. (contour) ('+units+') \n Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax4.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax4.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
 
 

@@ -513,7 +513,7 @@ def plot_set_1():
   cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar3.set_label(units,fontsize=6)
   cbar3.ax.tick_params(labelsize=6)
-  ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP (shaded; '+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
+  ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
 
   cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif)

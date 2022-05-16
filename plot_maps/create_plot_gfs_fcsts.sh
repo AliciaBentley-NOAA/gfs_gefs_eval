@@ -56,13 +56,12 @@ while IFS= read -r line ; do
 	#python plot_gfs_slp_4panel.py 2022042000 24 conus,upper_midwest /path/to/data SNODissue 0
 	python plot_gfs_slp_4panel.py ${CYCLE} ${FHHH_same} ${DOMAIN_ARRAY} ${DATA_PATH} ${CASE} ${COUNTER_same}
         sleep 3
-	#mv gfs_*_slp_${CASE}_${COUNTER_same}.png ${MAP_PATH}/gfs/${CYCLE}/.
 
 	COUNTER=${COUNTER_update}
 
 done < ${file}
 
- mv gfs_*_slp_${CASE}_*.png ${MAP_PATH}/gfs/${CYCLE}/.
+mv gfs_*_slp_${CASE}_*.png ${MAP_PATH}/gfs/${CYCLE}/.
 
 #touch ${MAP_PATH}/plot_gfs_fcst_${CYCLE}_done
 

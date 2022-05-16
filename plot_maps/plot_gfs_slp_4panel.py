@@ -309,17 +309,39 @@ def create_figure():
     urcrnrlat = 51.0
     cen_lat = 35.4
     cen_lon = -97.6
-    xextent=-2300000
-    yextent=-675000
+    xextent=-2500000
+    yextent=-840000
   elif dom == 'northeast':
-    llcrnrlon = -80.0
-    llcrnrlat = 40.0
+    llcrnrlon = -81.0
+    llcrnrlat = 39.5
     urcrnrlon = -66.5
     urcrnrlat = 48.0
     cen_lat = 44.0
     cen_lon = -76.0
-    xextent=-175000
-    yextent=-282791
+    xextent=-265000
+    yextent=-332791
+  elif dom == 'midatlantic':
+    llcrnrlon = -85.5
+    llcrnrlat = 33.6
+    urcrnrlon = -72.25
+    urcrnrlat = 42.3
+    cen_lat = 38.0
+    cen_lon = -79.0
+    xextent=-440000
+    yextent=-312500
+  elif dom == 'southeast':
+    llcrnrlon = -92.0
+    llcrnrlat = 24.0
+    urcrnrlon = -76.5
+    urcrnrlat = 35.25
+    cen_lat = 29.0
+    cen_lon = -88.0
+    xextent=-343000
+    yextent=-408000
+    #xextent=-12438
+    #yextent=-448648
+
+
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -355,7 +377,7 @@ def create_figure():
     ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
   else:
-    fig = plt.figure(figsize=(9,8))
+    fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,

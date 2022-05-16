@@ -330,16 +330,14 @@ def create_figure():
     xextent=-440000
     yextent=-312500
   elif dom == 'southeast':
-    llcrnrlon = -92.0
+    llcrnrlon = -92.25
     llcrnrlat = 24.0
-    urcrnrlon = -76.5
-    urcrnrlat = 35.25
+    urcrnrlon = -76.0
+    urcrnrlat = 35.3
     cen_lat = 29.0
     cen_lon = -88.0
-    xextent=-343000
-    yextent=-408000
-    #xextent=-12438
-    #yextent=-448648
+    xextent=-221000
+    yextent=-342500
 
 
 

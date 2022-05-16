@@ -338,7 +338,16 @@ def create_figure():
     cen_lon = -88.0
     xextent=-221000
     yextent=-342500
-
+  elif dom == 'ohiovalley':
+    llcrnrlon = -95.75
+    llcrnrlat = 33.6
+    urcrnrlon = -81.75
+    urcrnrlat = 42.775
+    cen_lat = 37.0
+    cen_lon = -89.0
+    xextent=-455000
+    yextent=-192000
+                                      
 
 
   # create figure and axes instances

@@ -356,6 +356,15 @@ def create_figure():
     cen_lon = -91.5
     xextent=-422500
     yextent=52500
+  elif dom == 'southcentral':
+    llcrnrlon = -108.25
+    llcrnrlat = 24.05
+    urcrnrlon = -90.0
+    urcrnrlat = 37.25
+    cen_lat = 29.0
+    cen_lon = -98.0
+    xextent=-817500
+    yextent=-286000
 
 
 
@@ -420,16 +429,16 @@ def create_figure():
 #                    alpha=falpha)
   lakes=cfeature.NaturalEarthFeature('physical','lakes',back_res,
                     edgecolor='black',facecolor='none',
-                    linewidth=fline_wd_lakes,alpha=falpha)
+                    linewidth=fline_wd_lakes,zorder=1)
   coastlines=cfeature.NaturalEarthFeature('physical','coastline',
                     back_res,edgecolor='black',facecolor='none',
-                    linewidth=fline_wd,alpha=falpha)
+                    linewidth=fline_wd,zorder=1)
   states=cfeature.NaturalEarthFeature('cultural','admin_1_states_provinces',
                     back_res,edgecolor='black',facecolor='none',
-                    linewidth=fline_wd,alpha=falpha)
+                    linewidth=fline_wd,zorder=1)
   borders=cfeature.NaturalEarthFeature('cultural','admin_0_countries',
                     back_res,edgecolor='black',facecolor='none',
-                    linewidth=fline_wd,alpha=falpha)
+                    linewidth=fline_wd,zorder=1)
 
   # All lat lons are earth relative, so setup the associated projection correct for that data
   transform = ccrs.PlateCarree()
@@ -442,23 +451,43 @@ def create_figure():
     ax3.imshow(img, origin='upper', transform=transform)
     ax4.imshow(img, origin='upper', transform=transform)
 
-#  ax1.add_feature(land)
-  ax1.add_feature(lakes)
-  ax1.add_feature(states)
-  ax1.add_feature(borders)
-  ax1.add_feature(coastlines)
-  ax2.add_feature(lakes)
-  ax2.add_feature(states)
-  ax2.add_feature(borders)
-  ax2.add_feature(coastlines)
-  ax3.add_feature(lakes)
-  ax3.add_feature(states)
-  ax3.add_feature(borders)
-  ax3.add_feature(coastlines)
-  ax4.add_feature(lakes)
-  ax4.add_feature(states)
-  ax4.add_feature(borders)
-  ax4.add_feature(coastlines)
+#  ax1.add_feature(lakes)
+#  ax1.add_feature(states)
+#  ax1.add_feature(borders)
+#  ax1.add_feature(coastlines)
+  ax1.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
+  ax1.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
+  ax1.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax1.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax1.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+#  ax2.add_feature(lakes)
+#  ax2.add_feature(states)
+#  ax2.add_feature(borders)
+#  ax2.add_feature(coastlines)
+  ax2.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
+  ax2.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
+  ax2.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax2.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax2.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+#  ax3.add_feature(lakes)
+#  ax3.add_feature(states)
+#  ax3.add_feature(borders)
+#  ax3.add_feature(coastlines)
+  ax3.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
+  ax3.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
+  ax3.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax3.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax3.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+#  ax4.add_feature(lakes)
+#  ax4.add_feature(states)
+#  ax4.add_feature(borders)
+#  ax4.add_feature(coastlines)
+  ax4.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
+  ax4.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
+  ax4.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax4.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax4.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+
 
   # Map/figure has been set up here, save axes instances for use again later
   keep_ax_lst_1 = ax1.get_children()[:]
@@ -524,45 +553,45 @@ def plot_set_1():
   xmax = int(round(xmax))
   ymax = int(round(ymax))
 
-  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1)
+  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1,zorder=2)
   cs_1.cmap.set_under('darkblue')
   cs_1.cmap.set_over('darkred')
-  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
   ax1.text(.5,1.03,'GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax1.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
-  ax1.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
+  ax1.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2)
+  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2,zorder=2)
   cs_2.cmap.set_under('darkblue')
   cs_2.cmap.set_over('darkred')
-  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
   ax2.text(.5,1.03,'GFSv17 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax2.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
-  ax2.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
+  ax2.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_3,vmin=5,norm=norm,transform=transform,cmap=cm3)
-  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_dif_fcst,transform=transform,cmap=cmdif,norm=normdif)
+#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_3,vmin=5,norm=norm,transform=transform,cmap=cm3,zorder=2)
+  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_dif_fcst,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
   cs_3.cmap.set_under('darkblue')
   cs_3.cmap.set_over('darkred')
   cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar3.set_label(units,fontsize=6)
   cbar3.ax.tick_params(labelsize=6)
   ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
-  ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
+  ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif)
+  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
 #  cs_4.cmap.set_under('gray')
 #  cs_4.cmap.set_over('gray')
-  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform)
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)
   ax4.text(.5,1.03,'GFSv17 - GFS Anl. MSLP (fill), GFS Anl. (contour) ('+units+') \n Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax4.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
-  ax4.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=4)
+  ax4.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
 
   plt.savefig('gfs_'+dom+'_slp_'+case+'_'+counter+'.png', format='png', bbox_inches='tight', dpi=300)

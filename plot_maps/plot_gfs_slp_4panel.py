@@ -365,6 +365,15 @@ def create_figure():
     cen_lon = -98.0
     xextent=-817500
     yextent=-286000
+  elif dom == 'centralplains':
+    llcrnrlon = -108.25
+    llcrnrlat = 34.5
+    urcrnrlon = -92.75
+    urcrnrlat = 44.5
+    cen_lat = 38.0
+    cen_lon = -100.0
+    xextent=-567500
+    yextent=-183500
 
 
 

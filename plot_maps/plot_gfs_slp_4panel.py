@@ -455,38 +455,38 @@ def create_figure():
 #  ax1.add_feature(states)
 #  ax1.add_feature(borders)
 #  ax1.add_feature(coastlines)
-  ax1.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
-  ax1.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
-  ax1.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax1.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax1.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax1.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face') #Fill continents
+  ax1.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face') #Fill lakes
+  ax1.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.3,linestyle='solid',edgecolor='k',zorder=4)
+  ax1.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',zorder=4)
+  ax1.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=0.6,linestyle='solid',edgecolor='k',zorder=4)
 #  ax2.add_feature(lakes)
 #  ax2.add_feature(states)
 #  ax2.add_feature(borders)
 #  ax2.add_feature(coastlines)
-  ax2.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
-  ax2.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
-  ax2.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax2.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax2.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax2.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face') #Fill continents
+  ax2.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face') #Fill lakes
+  ax2.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.3,linestyle='solid',edgecolor='k',zorder=4)
+  ax2.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',zorder=4)
+  ax2.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=0.6,linestyle='solid',edgecolor='k',zorder=4)
 #  ax3.add_feature(lakes)
 #  ax3.add_feature(states)
 #  ax3.add_feature(borders)
 #  ax3.add_feature(coastlines)
-  ax3.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
-  ax3.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
-  ax3.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax3.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax3.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax3.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face') #Fill continents
+  ax3.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face') #Fill lakes
+  ax3.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.3,linestyle='solid',edgecolor='k',zorder=4)
+  ax3.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',zorder=4)
+  ax3.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=0.6,linestyle='solid',edgecolor='k',zorder=4)
 #  ax4.add_feature(lakes)
 #  ax4.add_feature(states)
 #  ax4.add_feature(borders)
 #  ax4.add_feature(coastlines)
-  ax4.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face',linewidth=fline_wd) #Fill continents
-  ax4.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face',linewidth=fline_wd) #Fill lakes
-  ax4.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax4.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
-  ax4.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=1.0,linestyle='solid',edgecolor='k',linewidth=fline_wd,zorder=4)
+  ax4.add_feature(cfeature.LAND.with_scale('50m'),facecolor='lightgray',edgecolor='face') #Fill continents
+  ax4.add_feature(cfeature.LAKES.with_scale('50m'),facecolor='lightblue',edgecolor='face') #Fill lakes
+  ax4.add_feature(cfeature.STATES.with_scale('50m'),linewidths=0.3,linestyle='solid',edgecolor='k',zorder=4)
+  ax4.add_feature(cfeature.BORDERS.with_scale('50m'),linewidths=0.5,linestyle='solid',edgecolor='k',zorder=4)
+  ax4.add_feature(cfeature.COASTLINE.with_scale('50m'),linewidths=0.6,linestyle='solid',edgecolor='k',zorder=4)
 
 
   # Map/figure has been set up here, save axes instances for use again later
@@ -526,13 +526,13 @@ def plot_set_1():
   # Wind barb density settings
   if dom == 'conus':
     skip = 100
-    thick = 0.6
+    thick = 0.75
   elif dom == 'northeast':
     skip = 40
-    thick = 0.8
+    thick = 1.0
   else:
     skip = 30
-    thick = 0.8
+    thick = 1.0
   barblength = 3.5
 
   units = 'mb'

@@ -417,7 +417,7 @@ def create_figure():
     urcrnrlat = 48.20
     cen_lat = 35.0
     cen_lon = -90.0
-    xextent=-163000
+    xextent=-164000
     yextent=-1070000
 
 

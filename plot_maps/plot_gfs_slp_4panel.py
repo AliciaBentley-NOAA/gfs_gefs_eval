@@ -409,7 +409,7 @@ def create_figure():
     cen_lat = 40.0
     cen_lon = -100.0
     xextent=-4139000
-    yextent=-2122000
+    yextent=-2125000
 
 
 

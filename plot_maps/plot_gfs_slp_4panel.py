@@ -313,7 +313,7 @@ def create_figure():
     yextent=-840000
   elif dom == 'northeast':
     llcrnrlon = -81.0
-    llcrnrlat = 39.5
+    llcrnrlat = 39.497
     urcrnrlon = -66.5
     urcrnrlat = 48.0
     cen_lat = 44.0
@@ -342,7 +342,7 @@ def create_figure():
     llcrnrlon = -95.75
     llcrnrlat = 33.6
     urcrnrlon = -81.75
-    urcrnrlat = 42.775
+    urcrnrlat = 42.779
     cen_lat = 37.0
     cen_lon = -89.0
     xextent=-455000
@@ -367,13 +367,13 @@ def create_figure():
     yextent=-287000
   elif dom == 'centralplains':
     llcrnrlon = -108.25
-    llcrnrlat = 34.498
+    llcrnrlat = 34.490
     urcrnrlon = -92.75
     urcrnrlat = 44.5
     cen_lat = 38.0
     cen_lon = -100.0
     xextent=-567500
-    yextent=-184000
+    yextent=-185000
   elif dom == 'northernplains':
     llcrnrlon = -111.0
     llcrnrlat = 40.425
@@ -387,7 +387,7 @@ def create_figure():
     llcrnrlon = -128.5
     llcrnrlat = 40.0
     urcrnrlon = -111.0
-    urcrnrlat = 50.369
+    urcrnrlat = 50.375
     cen_lat = 44.0
     cen_lon = -119.0
     xextent=-610000
@@ -396,11 +396,20 @@ def create_figure():
     llcrnrlon = -127.75
     llcrnrlat = 30.0
     urcrnrlon = -108.95
-    urcrnrlat = 42.55
+    urcrnrlat = 42.559
     cen_lat = 35.0
     cen_lon = -116.0
     xextent=-899000
     yextent=-302000
+  elif dom == 'northamerica':
+    llcrnrlon = -145.0
+    llcrnrlat = 7.0
+    urcrnrlon = -55.0
+    urcrnrlat = 72.0
+    cen_lat = 40.0
+    cen_lon = -100.0
+    xextent=-4139000
+    yextent=-2122000
 
 
 
@@ -426,7 +435,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)
-  elif dom == 'northeast':
+  elif dom == 'northamerica':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -435,19 +444,30 @@ def create_figure():
             standard_parallels=None,globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
   else:
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
-          false_easting=0.0,false_northing=0.0, secant_latitudes=None, 
-          standard_parallels=None,globe=None)
+            false_easting=0.0,false_northing=0.0, secant_latitudes=None,
+            standard_parallels=None,globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)      
+#  else:
+#    fig = plt.figure(figsize=(8,8))
+#    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+#    extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
+#    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
+#          false_easting=0.0,false_northing=0.0, secant_latitudes=None, 
+#          standard_parallels=None,globe=None)
+#    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
+#    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
+#    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
+#    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
 
   ax1.set_extent(extent)
   ax2.set_extent(extent)
@@ -563,11 +583,11 @@ def plot_set_1():
   if dom == 'conus':
     skip = 100
     thick = 0.75
-  elif dom == 'northeast':
+  elif dom == 'northamerica':
     skip = 40
-    thick = 1.0
+    thick = 0.6
   else:
-    skip = 30
+    skip = 40
     thick = 1.0
   barblength = 3.5
 
@@ -626,7 +646,7 @@ def plot_set_1():
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)
-  ax4.text(.5,1.03,'GFSv17 - GFS Anl. MSLP (fill), GFS Anl. (contour) ('+units+') \n Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax4.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
+  ax4.text(.5,1.03,'GFSv17 - GFS Anl. (fill), GFS Anl. (contour) MSLP ('+units+') \n Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax4.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax4.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
 

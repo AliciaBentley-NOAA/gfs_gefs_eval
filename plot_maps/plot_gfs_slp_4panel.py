@@ -333,7 +333,7 @@ def create_figure():
     llcrnrlon = -92.25
     llcrnrlat = 24.0
     urcrnrlon = -76.0
-    urcrnrlat = 35.3
+    urcrnrlat = 35.315
     cen_lat = 29.0
     cen_lon = -88.0
     xextent=-221000
@@ -358,22 +358,31 @@ def create_figure():
     yextent=52500
   elif dom == 'southcentral':
     llcrnrlon = -108.25
-    llcrnrlat = 24.05
+    llcrnrlat = 24.027
     urcrnrlon = -90.0
     urcrnrlat = 37.25
     cen_lat = 29.0
     cen_lon = -98.0
     xextent=-817500
-    yextent=-286000
+    yextent=-287000
   elif dom == 'centralplains':
     llcrnrlon = -108.25
-    llcrnrlat = 34.5
+    llcrnrlat = 34.498
     urcrnrlon = -92.75
     urcrnrlat = 44.5
     cen_lat = 38.0
     cen_lon = -100.0
     xextent=-567500
-    yextent=-183500
+    yextent=-184000
+  elif dom == 'northernplains':
+    llcrnrlon = -111.0
+    llcrnrlat = 40.425
+    urcrnrlon = -95.5
+    urcrnrlat = 49.5
+    cen_lat = 45.0
+    cen_lon = -102.0
+    xextent=-586000
+    yextent=-324500
 
 
 

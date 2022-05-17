@@ -383,6 +383,15 @@ def create_figure():
     cen_lon = -102.0
     xextent=-586000
     yextent=-324500
+  elif dom == 'northwest':
+    llcrnrlon = -128.5
+    llcrnrlat = 40.0
+    urcrnrlon = -111.0
+    urcrnrlat = 50.369
+    cen_lat = 44.0
+    cen_lon = -119.0
+    xextent=-610000
+    yextent=-228000
 
 
 

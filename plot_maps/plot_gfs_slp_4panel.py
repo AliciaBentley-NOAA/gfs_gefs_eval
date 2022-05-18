@@ -437,6 +437,16 @@ def create_figure():
     cen_lon = -155.0
     xextent=-1588000
     yextent=-960000
+  elif dom == 'westcoast':
+    llcrnrlon = -142.765
+    llcrnrlat = 27.0
+    urcrnrlon = -105.0
+    urcrnrlat = 52.415
+    cen_lat = 40.0
+    cen_lon = -118.0
+    xextent=-1979000
+    yextent=-895500
+
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -471,7 +481,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
-  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska':
+  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -633,7 +643,7 @@ def plot_set_1():
   elif dom == 'northamerica':
     skip = 40
     thick = 0.6
-  elif dom == 'eastcoast':
+  elif dom == 'eastcoast' or dom == 'westcoast':
     skip = 40
     thick = 0.6
   elif dom == 'gulfofmexico':

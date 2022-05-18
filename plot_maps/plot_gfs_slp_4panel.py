@@ -464,7 +464,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
-  elif dom == 'eastcoast':
+  elif dom == 'eastcoast' or dom == 'gulfofmexico':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -475,7 +475,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
-  elif dom == 'gulfofmexico':
+  elif dom == 'alaska':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -629,6 +629,9 @@ def plot_set_1():
   elif dom == 'eastcoast':
     skip = 40
     thick = 0.6
+  elif dom == 'gulfofmexico':
+    skip = 40
+    thick = 0.7
   else:
     skip = 40
     thick = 1.0

@@ -417,8 +417,17 @@ def create_figure():
     urcrnrlat = 48.20
     cen_lat = 35.0
     cen_lon = -90.0
-    xextent=-164000
+    xextent=-166700
     yextent=-1070000
+  elif dom == 'gulfofmexico':
+    llcrnrlon = -101.505
+    llcrnrlat = 12.52
+    urcrnrlon = -74.5
+    urcrnrlat = 34.25
+    cen_lat = 20.0
+    cen_lon = -90.0
+    xextent=-953500
+    yextent=-410000
 
 
 
@@ -456,6 +465,17 @@ def create_figure():
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
   elif dom == 'eastcoast':
+    fig = plt.figure(figsize=(8,8))
+    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
+    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
+            false_easting=0.0,false_northing=0.0, secant_latitudes=None,
+            standard_parallels=None,globe=None)
+    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
+    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
+  elif dom == 'gulfofmexico':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]

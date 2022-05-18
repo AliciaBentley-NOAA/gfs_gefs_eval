@@ -428,8 +428,15 @@ def create_figure():
     cen_lon = -90.0
     xextent=-953500
     yextent=-410000
-
-
+  elif dom == 'alaska':
+    llcrnrlon = -182.45
+    llcrnrlat = 44.0
+    urcrnrlon = -126.0
+    urcrnrlat = 74.00
+    cen_lat = 60.0
+    cen_lon = -155.0
+    xextent=-1588000
+    yextent=-960000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -464,7 +471,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
-  elif dom == 'eastcoast' or dom == 'gulfofmexico':
+  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -475,7 +482,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
-  elif dom == 'alaska':
+  elif dom == 'puertorico':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -619,7 +626,7 @@ def plot_set_1():
   t1 = time.perf_counter()
   print(('Working on slp for '+dom))
 
-  # Wind barb density settings
+  # Wind barb density and line thicknes settings
   if dom == 'conus':
     skip = 100
     thick = 0.75
@@ -632,6 +639,9 @@ def plot_set_1():
   elif dom == 'gulfofmexico':
     skip = 40
     thick = 0.7
+  elif dom == 'alaska':
+    skip = 40
+    thick = 0.8
   else:
     skip = 40
     thick = 1.0

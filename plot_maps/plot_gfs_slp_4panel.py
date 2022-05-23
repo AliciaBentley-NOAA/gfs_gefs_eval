@@ -482,6 +482,15 @@ def create_figure():
     cen_lon = 140.0
     xextent=-1705000
     yextent=-1888000
+  elif dom == 'southpacific':
+    llcrnrlon = 154.5
+    llcrnrlat = -65.0
+    urcrnrlon = 192.0
+    urcrnrlat = 0.0
+    cen_lat = -30.0
+    cen_lon = 183.0
+    xextent=-75000
+    yextent=-10000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -516,7 +525,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
-  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific':
+  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific' or dom == 'westpacific' or dom == 'southpacific':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -527,7 +536,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
-  elif dom == 'westpacific':
+  elif dom == 'other':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -678,7 +687,7 @@ def plot_set_1():
   elif dom == 'northamerica':
     skip = 40
     thick = 0.6
-  elif dom == 'eastcoast' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific':
+  elif dom == 'eastcoast' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific' or dom == 'westpacific' or dom == 'southpacific':
     skip = 40
     thick = 0.6
   elif dom == 'gulfofmexico':
@@ -687,7 +696,7 @@ def plot_set_1():
   elif dom == 'alaska':
     skip = 40
     thick = 0.8
-  elif dom == 'westpacific':
+  elif dom == 'other':
     skip = 40
     thick = 0.6
   else:

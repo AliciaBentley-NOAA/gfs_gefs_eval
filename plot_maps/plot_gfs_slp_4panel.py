@@ -446,7 +446,33 @@ def create_figure():
     cen_lon = -118.0
     xextent=-1979000
     yextent=-895500
-
+  elif dom == 'puertorico':
+    llcrnrlon = -83.19
+    llcrnrlat = 8.0
+    urcrnrlon = -57.0
+    urcrnrlat = 30.20
+    cen_lat = 20.0
+    cen_lon = -70.0
+    xextent=-1225000
+    yextent=-932000
+  elif dom == 'hawaii':
+    llcrnrlon = -168.0
+    llcrnrlat = 12.0
+    urcrnrlon = -146.85
+    urcrnrlat = 28.99
+    cen_lat = 20.0
+    cen_lon = -156.0
+    xextent=-1109000
+    yextent=-588000
+  elif dom == 'eastpacific':
+    llcrnrlon = -126.5
+    llcrnrlat = 0.0
+    urcrnrlon = -83.0
+    urcrnrlat = 35.47
+    cen_lat = 20.0
+    cen_lon = -97.0
+    xextent=-3211000
+    yextent=-1750000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -481,7 +507,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
-  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast':
+  elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -492,7 +518,7 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
-  elif dom == 'puertorico':
+  elif dom == 'eastpacific':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
@@ -643,7 +669,7 @@ def plot_set_1():
   elif dom == 'northamerica':
     skip = 40
     thick = 0.6
-  elif dom == 'eastcoast' or dom == 'westcoast':
+  elif dom == 'eastcoast' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii':
     skip = 40
     thick = 0.6
   elif dom == 'gulfofmexico':
@@ -652,6 +678,9 @@ def plot_set_1():
   elif dom == 'alaska':
     skip = 40
     thick = 0.8
+  elif dom == 'eastpacific':
+    skip = 40
+    thick = 0.6
   else:
     skip = 40
     thick = 1.0

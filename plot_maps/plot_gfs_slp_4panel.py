@@ -509,6 +509,15 @@ def create_figure():
     cen_lon = -97.0
     xextent=-656000
     yextent=-261000
+  elif dom == 'fourcorners':
+    llcrnrlon = -117.25
+    llcrnrlat = 30.5
+    urcrnrlon = -99.87
+    urcrnrlat = 42.0
+    cen_lat = 36.0
+    cen_lon = -106.0
+    xextent=-863000
+    yextent=-382000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')

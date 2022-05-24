@@ -585,7 +585,7 @@ def create_figure():
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
-    myproj=ccrs.Miller(central_longitude=cen_lon)
+    myproj=ccrs.PlateCarree(central_longitude=cen_lon, globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)

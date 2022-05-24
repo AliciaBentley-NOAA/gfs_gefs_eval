@@ -712,39 +712,64 @@ def plot_set_1():
   t1 = time.perf_counter()
   print(('Working on slp for '+dom))
 
-  slp1 = slp_1
-  slp2 = slp_2
-  slp4 = slp_4
-  slpdif_fcst = slp_dif_fcst
-  slpdif_anl = slp_dif_anl
-
   # Wind barb density and line thicknes settings
   if dom == 'conus':
     skip = 100
     thick = 0.75
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
   elif dom == 'northamerica' or dom == 'northpacific':
     skip = 40
     thick = 0.5
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
   elif dom == 'eastcoast' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific' or dom == 'westpacific' or dom == 'southpacific':
     skip = 40
     thick = 0.6
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
   elif dom == 'gulfofmexico':
     skip = 40
     thick = 0.7
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
   elif dom == 'alaska':
     skip = 40
     thick = 0.8
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
   elif dom == 'globe':
     skip = 40
     thick = 0.5
-    slp1 = ndimage.gaussian_filter(slp_1, sigma=20, order=0)
-    slp2 = ndimage.gaussian_filter(slp_2, sigma=20, order=0)
-    slp4 = ndimage.gaussian_filter(slp_4, sigma=20, order=0)
-    slpdif_fcst = ndimage.gaussian_filter(slp_dif_fcst, sigma=20, order=0)
-    slpdif_anl = ndimage.gaussian_filter(slp_dif_anl, sigma=20, order=0)
+    slp1 = ndimage.filters.gaussian_filter(slp_1, 10.0)
+    slp2 = ndimage.filters.gaussian_filter(slp_2, 10.0)
+    slp4 = ndimage.filters.gaussian_filter(slp_4, 10.0)
+    slpdif_fcst = ndimage.filters.gaussian_filter(slp_dif_fcst, 10.0)
+    slpdif_anl = ndimage.filters.gaussian_filter(slp_dif_anl, 10.0)
   else:
     skip = 40
-    thick = 1.0
+    thick = 0.8
+    slp1 = slp_1
+    slp2 = slp_2
+    slp4 = slp_4
+    slpdif_fcst = slp_dif_fcst
+    slpdif_anl = slp_dif_anl
+
   barblength = 3.5
 
   units = 'mb'

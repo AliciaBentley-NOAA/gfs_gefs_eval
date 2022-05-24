@@ -491,6 +491,15 @@ def create_figure():
     cen_lon = 183.0
     xextent=-75000
     yextent=-10000
+  elif dom == 'carolinas':
+    llcrnrlon = -85.62
+    llcrnrlat = 30.4
+    urcrnrlon = -72.25
+    urcrnrlat = 39.3
+    cen_lat = 34.5
+    cen_lon = -81.0
+    xextent=-276000
+    yextent=-284000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -558,17 +567,6 @@ def create_figure():
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
     ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)      
-#  else:
-#    fig = plt.figure(figsize=(8,8))
-#    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
-#    extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
-#    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
-#          false_easting=0.0,false_northing=0.0, secant_latitudes=None, 
-#          standard_parallels=None,globe=None)
-#    ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
-#    ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-#    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
-#    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
 
   ax1.set_extent(extent)
   ax2.set_extent(extent)

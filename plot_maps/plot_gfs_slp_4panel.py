@@ -527,6 +527,15 @@ def create_figure():
     cen_lon = -180.0
     xextent=-4005000
     yextent=-1940000
+  elif dom == 'globe':
+    llcrnrlon = -180.00
+    llcrnrlat = -90.0
+    urcrnrlon = 179.999
+    urcrnrlat = 90.0
+    cen_lat = 0.0
+    cen_lon = 0.0
+    xextent=-10000
+    yextent=-10000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')
@@ -576,9 +585,7 @@ def create_figure():
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
-    myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
-            false_easting=0.0,false_northing=0.0, secant_latitudes=None,
-            standard_parallels=(24, 36), globe=None)
+    myproj=ccrs.Miller(central_longitude=cen_lon)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
     ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
@@ -705,6 +712,12 @@ def plot_set_1():
   t1 = time.perf_counter()
   print(('Working on slp for '+dom))
 
+  slp1 = slp_1
+  slp2 = slp_2
+  slp4 = slp_4
+  slpdif_fcst = slp_dif_fcst
+  slpdif_anl = slp_dif_anl
+
   # Wind barb density and line thicknes settings
   if dom == 'conus':
     skip = 100
@@ -724,6 +737,11 @@ def plot_set_1():
   elif dom == 'globe':
     skip = 40
     thick = 0.5
+    slp1 = ndimage.gaussian_filter(slp_1, sigma=20, order=0)
+    slp2 = ndimage.gaussian_filter(slp_2, sigma=20, order=0)
+    slp4 = ndimage.gaussian_filter(slp_4, sigma=20, order=0)
+    slpdif_fcst = ndimage.gaussian_filter(slp_dif_fcst, sigma=20, order=0)
+    slpdif_anl = ndimage.gaussian_filter(slp_dif_anl, sigma=20, order=0)
   else:
     skip = 40
     thick = 1.0
@@ -747,28 +765,28 @@ def plot_set_1():
   xmax = int(round(xmax))
   ymax = int(round(ymax))
 
-  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp_1,vmin=5,norm=norm,transform=transform,cmap=cm1,zorder=2)
+  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp1,vmin=5,norm=norm,transform=transform,cmap=cm1,zorder=2)
   cs_1.cmap.set_under('darkblue')
   cs_1.cmap.set_over('darkred')
-  cs_1b = ax1.contour(lon_shift,lat_shift,slp_1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
   ax1.text(.5,1.03,'GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax1.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax1.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp_2,vmin=5,norm=norm,transform=transform,cmap=cm2,zorder=2)
+  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp2,vmin=5,norm=norm,transform=transform,cmap=cm2,zorder=2)
   cs_2.cmap.set_under('darkblue')
   cs_2.cmap.set_over('darkred')
-  cs_2b = ax2.contour(lon_shift,lat_shift,slp_2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
   ax2.text(.5,1.03,'GFSv17 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax2.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax2.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_3,vmin=5,norm=norm,transform=transform,cmap=cm3,zorder=2)
-  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp_dif_fcst,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
+#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp3,vmin=5,norm=norm,transform=transform,cmap=cm3,zorder=2)
+  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slpdif_fcst,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
   cs_3.cmap.set_under('darkblue')
   cs_3.cmap.set_over('darkred')
   cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
@@ -777,10 +795,10 @@ def plot_set_1():
   ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slp_dif_anl,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
+  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slpdif_anl,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
 #  cs_4.cmap.set_under('gray')
 #  cs_4.cmap.set_over('gray')
-  cs_4b = ax4.contour(lon_shift,lat_shift,slp_4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)

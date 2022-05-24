@@ -500,6 +500,15 @@ def create_figure():
     cen_lon = -81.0
     xextent=-276000
     yextent=-284000
+  elif dom == 'oklahoma':
+    llcrnrlon = -105.7
+    llcrnrlat = 30.44
+    urcrnrlon = -91.3
+    urcrnrlat = 40.1
+    cen_lat = 34.5
+    cen_lon = -97.0
+    xextent=-656000
+    yextent=-261000
 
   # create figure and axes instances
   im = image.imread('/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python/noaa.png')

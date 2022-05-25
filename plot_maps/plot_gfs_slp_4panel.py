@@ -6,7 +6,7 @@ import cartopy.crs as ccrs
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import cartopy.feature as cfeature
 import matplotlib
-#matplotlib.use('Agg')
+#print(matplotlib.__version__)
 import io
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -19,6 +19,7 @@ import ncepy
 from scipy import ndimage
 from netCDF4 import Dataset
 import cartopy
+#print(cartopy.__version__)
 import copy
 
 #--------------Set some classes------------------------#
@@ -318,7 +319,7 @@ def create_figure():
     urcrnrlat = 48.0
     cen_lat = 44.0
     cen_lon = -76.0
-    xextent=-265000
+    xextent=-264000
     yextent=-332791
   elif dom == 'midatlantic':
     llcrnrlon = -85.5
@@ -348,7 +349,7 @@ def create_figure():
     xextent=-455000
     yextent=-192000
   elif dom == 'midwest':
-    llcrnrlon = -98.75
+    llcrnrlon = -98.74
     llcrnrlat = 38.5
     urcrnrlon = -80.75
     urcrnrlat = 49.28
@@ -399,7 +400,7 @@ def create_figure():
     urcrnrlat = 42.559
     cen_lat = 35.0
     cen_lon = -116.0
-    xextent=-899000
+    xextent=-898000
     yextent=-302000
   elif dom == 'northamerica':
     llcrnrlon = -145.0
@@ -504,7 +505,7 @@ def create_figure():
     llcrnrlon = -105.7
     llcrnrlat = 30.44
     urcrnrlon = -91.3
-    urcrnrlat = 40.1
+    urcrnrlat = 40.11
     cen_lat = 34.5
     cen_lon = -97.0
     xextent=-656000
@@ -592,15 +593,15 @@ def create_figure():
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
   else:
     fig = plt.figure(figsize=(8,8))
-    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
             false_easting=0.0,false_northing=0.0, secant_latitudes=None,
             standard_parallels=None,globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)      
+    ax3 = fig.add_subplot(gs[8:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[8:,9:], projection=myproj)      
 
   ax1.set_extent(extent)
   ax2.set_extent(extent)
@@ -756,11 +757,11 @@ def plot_set_1():
   elif dom == 'globe':
     skip = 40
     thick = 0.5
-    slp1 = ndimage.filters.gaussian_filter(slp_1, 10.0)
-    slp2 = ndimage.filters.gaussian_filter(slp_2, 10.0)
-    slp4 = ndimage.filters.gaussian_filter(slp_4, 10.0)
-    slpdif_fcst = ndimage.filters.gaussian_filter(slp_dif_fcst, 10.0)
-    slpdif_anl = ndimage.filters.gaussian_filter(slp_dif_anl, 10.0)
+    slp1 = slp_1 #ndimage.filters.gaussian_filter(slp_1, 30.0)
+    slp2 = slp_2 #ndimage.filters.gaussian_filter(slp_2, 30.0)
+    slp4 = slp_4 #ndimage.filters.gaussian_filter(slp_4, 30.0)
+    slpdif_fcst = slp_dif_fcst #ndimage.filters.gaussian_filter(slp_dif_fcst, 30.0)
+    slpdif_anl = slp_dif_anl #ndimage.filters.gaussian_filter(slp_dif_anl, 30.0)
   else:
     skip = 40
     thick = 0.8

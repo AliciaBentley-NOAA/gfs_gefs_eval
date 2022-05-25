@@ -304,14 +304,14 @@ def create_figure():
 
   # Map corners for each domain
   if dom == 'conus':
-    llcrnrlon = -125.5
-    llcrnrlat = 20.0 
-    urcrnrlon = -63.5
-    urcrnrlat = 51.0
+    llcrnrlon = -123.0
+    llcrnrlat = 19.5 
+    urcrnrlon = -65.25
+    urcrnrlat = 52.5
     cen_lat = 35.4
     cen_lon = -97.6
-    xextent=-2500000
-    yextent=-840000
+    xextent=-2200000
+    yextent=-885000
   elif dom == 'northeast':
     llcrnrlon = -81.0
     llcrnrlat = 39.497
@@ -445,8 +445,8 @@ def create_figure():
     urcrnrlat = 52.415
     cen_lat = 40.0
     cen_lon = -118.0
-    xextent=-1979000
-    yextent=-895500
+    xextent=-1978000
+    yextent=-895000
   elif dom == 'puertorico':
     llcrnrlon = -83.19
     llcrnrlat = 8.0
@@ -520,14 +520,14 @@ def create_figure():
     xextent=-863000
     yextent=-382000
   elif dom == 'northpacific':
-    llcrnrlon = -225.23
-    llcrnrlat = 0.0
-    urcrnrlon = -121.0
-    urcrnrlat = 66.5
+    llcrnrlon = -223.5
+    llcrnrlat = 1.0
+    urcrnrlon = -123.5
+    urcrnrlat = 72.57
     cen_lat = 30.0
     cen_lon = -180.0
-    xextent=-4005000
-    yextent=-1940000
+    xextent=-4100000
+    yextent=-1925000
   elif dom == 'globe':
     llcrnrlon = -180.00
     llcrnrlat = -90.0
@@ -550,19 +550,19 @@ def create_figure():
 
   # set up the map background with cartopy
   if dom == 'conus':
-    fig = plt.figure(figsize=(9,7))
-    gs = GridSpec(18,18,wspace=0.0,hspace=0.0)
+    fig = plt.figure(figsize=(8,8))
+    gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
     extent = [llcrnrlon-1,urcrnrlon-6,llcrnrlat,urcrnrlat+1]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
             false_easting=0.0,false_northing=0.0, secant_latitudes=None,
             standard_parallels=None,globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[9:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[9:,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[0:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[0:,9:], projection=myproj)
   elif dom == 'northamerica' or dom == 'northpacific':
     fig = plt.figure(figsize=(8,8))
-    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
             false_easting=0.0,false_northing=0.0, secant_latitudes=None,
@@ -573,15 +573,15 @@ def create_figure():
     ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
   elif dom == 'eastcoast' or dom == 'gulfofmexico' or dom == 'alaska' or dom == 'westcoast' or dom == 'puertorico' or dom == 'hawaii' or dom == 'eastpacific' or dom == 'westpacific' or dom == 'southpacific':
     fig = plt.figure(figsize=(8,8))
-    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.LambertConformal(central_longitude=cen_lon, central_latitude=cen_lat,
             false_easting=0.0,false_northing=0.0, secant_latitudes=None,
             standard_parallels=None,globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[10:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[10:,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[8:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[8:,9:], projection=myproj)
   elif dom == 'globe':
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
@@ -716,7 +716,7 @@ def plot_set_1():
   # Wind barb density and line thicknes settings
   if dom == 'conus':
     skip = 100
-    thick = 0.75
+    thick = 0.6
     slp1 = slp_1
     slp2 = slp_2
     slp4 = slp_4

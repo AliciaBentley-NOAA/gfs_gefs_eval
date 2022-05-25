@@ -54,9 +54,9 @@ export PLOT_GEFS_FCSTS=NO
 export PLOT_GEFS_DPROGDT=NO
 
 # Select which forecast hours to plot (applies to PLOT_GFS_FCSTS and PLOT_GEFS_FCSTS)
-export FHR_START=0			 # Typically 0 hours (beginning of forecast)
-export FHR_END=24 	                 # Typically 240 hours (10-day forecast)
-export FHR_INC=6                         # Typically 6 hourS
+export FHR_START=240			 # Typically 0 hours (beginning of forecast)
+export FHR_END=240 	                 # Typically 240 hours (10-day forecast)
+export FHR_INC=6                         # Typically 6 hours
 
 # Select DPROGDT valid date and increment to plot (applies to PLOT_GEFS_DPROGDT)
 export DPROGDT_VDATE=2022021100    	 # The date and time of the the event; YYYYMMDDHH
@@ -64,7 +64,7 @@ export DPROGDT_INC=24              	 # Typically 24 hours between dprogdt foreca
 
 # Specify the domains to plot. This must be written as: 'domain1,domain2,...' (with no spaces)
 # Example input: 'conus,northeast'
-export DOMAIN_ARRAY='conus,northeast'
+export DOMAIN_ARRAY='globe,conus,northeast'
 
 # *****************************************
 # ****Select initialization dates/hours****

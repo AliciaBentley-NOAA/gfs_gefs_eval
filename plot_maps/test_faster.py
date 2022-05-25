@@ -243,8 +243,6 @@ lon = lons[0]
 # Shifted lat/lon arrays for pcolormesh
 #lat_shift = lats_shift[0]
 #lon_shift = lons_shift[0]
-lat_shift = lat
-lon_shift = lon
 
 # Specify plotting domains
 str = str(sys.argv[3])
@@ -584,13 +582,13 @@ def create_figure():
     ax4 = fig.add_subplot(gs[8:,9:], projection=myproj)
   elif dom == 'globe':
     fig = plt.figure(figsize=(8,8))
-    gs = GridSpec(19,18,wspace=0.0,hspace=0.0)
+    gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
     extent = [llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat]
     myproj=ccrs.PlateCarree(central_longitude=cen_lon, globe=None)
     ax1 = fig.add_subplot(gs[0:9,0:9], projection=myproj)
     ax2 = fig.add_subplot(gs[0:9,9:], projection=myproj)
-    ax3 = fig.add_subplot(gs[4:,0:9], projection=myproj)
-    ax4 = fig.add_subplot(gs[4:,9:], projection=myproj)
+    ax3 = fig.add_subplot(gs[0:,0:9], projection=myproj)
+    ax4 = fig.add_subplot(gs[0:,9:], projection=myproj)
   else:
     fig = plt.figure(figsize=(8,8))
     gs = GridSpec(19,18,wspace=0.2,hspace=0.0)
@@ -612,6 +610,10 @@ def create_figure():
   fline_wd = 0.3  # line width
   fline_wd_lakes = 0.3  # line width
   falpha = 0.5    # transparency
+
+  out = myproj.transform_points(ccrs.PlateCarree(),lon,lat)
+  lon_shift = out[:,:,0]
+  lat_shift = out[:,:,1]
 
   # natural_earth
 #  land=cfeature.NaturalEarthFeature('physical','land',back_res,
@@ -791,28 +793,28 @@ def plot_set_1():
   xmax = int(round(xmax))
   ymax = int(round(ymax))
 
-  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp1,vmin=5,norm=norm,transform=transform,cmap=cm1,zorder=2)
+  cs_1 = ax1.pcolormesh(lon_shift,lat_shift,slp1,vmin=5,norm=norm,cmap=cm1,zorder=2)
   cs_1.cmap.set_under('darkblue')
   cs_1.cmap.set_over('darkred')
-  cs_1b = ax1.contour(lon_shift,lat_shift,slp1,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_1b = ax1.contour(lon_shift,lat_shift,slp1,np.arange(940,1060,4),colors='black',linewidths=thick,zorder=3)
   cbar1 = plt.colorbar(cs_1,ax=ax1,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar1.set_label(units,fontsize=6)
   cbar1.ax.tick_params(labelsize=6)
   ax1.text(.5,1.03,'GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax1.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax1.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp2,vmin=5,norm=norm,transform=transform,cmap=cm2,zorder=2)
+  cs_2 = ax2.pcolormesh(lon_shift,lat_shift,slp2,vmin=5,norm=norm,cmap=cm2,zorder=2)
   cs_2.cmap.set_under('darkblue')
   cs_2.cmap.set_over('darkred')
-  cs_2b = ax2.contour(lon_shift,lat_shift,slp2,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_2b = ax2.contour(lon_shift,lat_shift,slp2,np.arange(940,1060,4),colors='black',linewidths=thick,zorder=3)
   cbar2 = plt.colorbar(cs_2,ax=ax2,orientation='horizontal',pad=0.01,ticks=clevs_thin,shrink=0.8,extend='both')
 #  cbar2.set_label(units,fontsize=6)
   cbar2.ax.tick_params(labelsize=6)
   ax2.text(.5,1.03,'GFSv17 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax2.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax2.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp3,vmin=5,norm=norm,transform=transform,cmap=cm3,zorder=2)
-  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slpdif_fcst,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
+#  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slp3,vmin=5,norm=norm,cmap=cm3,zorder=2)
+  cs_3 = ax3.pcolormesh(lon_shift,lat_shift,slpdif_fcst,cmap=cmdif,norm=normdif,zorder=2)
   cs_3.cmap.set_under('darkblue')
   cs_3.cmap.set_over('darkred')
   cbar3 = plt.colorbar(cs_3,ax=ax3,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
@@ -821,10 +823,10 @@ def plot_set_1():
   ax3.text(.5,1.03,'GFSv17 - GFSv16 MSLP ('+units+') \n Initialized: '+itime+' Valid: '+vtime + ' (f'+fhour+')',horizontalalignment='center',fontsize=6,transform=ax3.transAxes,bbox=dict(facecolor='white',alpha=0.85,boxstyle='square,pad=0.2'))
   ax3.imshow(im,aspect='equal',alpha=0.5,origin='upper',extent=(xmin,xextent,ymin,yextent),zorder=5)
 
-  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slpdif_anl,transform=transform,cmap=cmdif,norm=normdif,zorder=2)
+  cs_4 = ax4.pcolormesh(lon_shift,lat_shift,slpdif_anl,cmap=cmdif,norm=normdif,zorder=2)
 #  cs_4.cmap.set_under('gray')
 #  cs_4.cmap.set_over('gray')
-  cs_4b = ax4.contour(lon_shift,lat_shift,slp4,np.arange(940,1060,4),colors='black',linewidths=thick,transform=transform,zorder=3)
+  cs_4b = ax4.contour(lon_shift,lat_shift,slp4,np.arange(940,1060,4),colors='black',linewidths=thick,zorder=3)
   cbar4 = plt.colorbar(cs_4,ax=ax4,orientation='horizontal',pad=0.01,ticks=clevsdif,shrink=0.8,extend='both')
 #  cbar4.set_label(units,fontsize=6)
   cbar4.ax.tick_params(labelsize=6)

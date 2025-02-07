@@ -1,20 +1,20 @@
 #!/bin/bash
 ###################################################
 # Script to download forecasts/analyses from HPSS
-# for official GFS and GEFS evaluations
+# for official GFSv17 and GEFSv13 evaluations
 #
 # Contributors: Alicia.Bentley@noaa.gov
 # NOAA/NWS/NCEP/Environmental Modeling Center
-# Verification and Products Branch (VPB)
+# Verification and Products Group (VPG)
 ###################################################
-module purge
-module load envvar/1.0
-module load intel/19.1.3.304
-module load PrgEnv-intel/8.1.0
-module load craype/2.7.10
-module load cray-mpich/8.1.9
-module load imagemagick/7.0.8-7
-module load wgrib2/2.0.8_wmo
+module reset
+module load intel/${intel_ver}
+module load PrgEnv-intel/${PrgEnvintel_ver}
+module load craype/${craype_ver}
+module load cray-mpich/${craympich_ver}
+module load imagemagick/${imagemagick_ver}
+module load wgrib2/${wgrib2_ver}
+
 #Load Python
 module load python/3.8.6
 module load proj/7.1.0
@@ -22,6 +22,8 @@ module load geos/3.8.1
 module use /lfs/h1/mdl/nbm/save/apps/modulefiles
 module load python-modules/3.8.6
 export PYTHONPATH="${PYTHONPATH}:/lfs/h2/emc/vpppg/noscrub/Alicia.Bentley/python"
+
+#Start Counter
 counter=0
 #===============================================================================================================
 #==============================================  BEGIN CHANGES  ================================================
@@ -34,10 +36,11 @@ counter=0
 export CASE='SNODissue'
 
 # Location of your saved GFS/GEFS evaluation /download_data directory
-export SCRIPTS_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/gfs_gefs_eval/download_data'
+export SCRIPTS_PATH='/lfs/h2/emc/vpppg/save/'${USER}'/gfs_gefs_eval/download_data'
 
-# Location to store downloaded forecasts/analyses files
-export DATA_PATH='/lfs/h2/emc/ptmp/'${USER}'/gfs_gefs_eval/'${CASE}'/data'
+# Location to store downloaded forecasts/analyses files 
+###export DATA_PATH='/lfs/h2/emc/stmp/'${USER}'/gfs_gefs_eval/'${CASE}'/data'
+export DATA_PATH='/lfs/h2/emc/vpppg/noscrub/'${USER}'/eval_case_study/'${CASE}'/data'
 
 # Location to write output from submitted download data jobs
 export OUTPUT_PATH=${DATA_PATH}'/output'
@@ -52,12 +55,13 @@ export CHECK_DATA=NO
 # *****************************************
 # Select which analysis types to download (YES/NO)
 export GET_GFS_ANL=YES
-export GET_RAP_ANL=YES
+export GET_RAP_ANL=NO
 export GET_ST4_ANL=YES
 export GET_NOHRSC_ANL=YES
+
 # Select analyses start, end, and increment to download
 export ANL_START=0 			 # Start downloading analysis files for the first initialization date if set to 0
-export ANL_END=264                       # Download analyses until 480 hours after first init date (i.e., 10 days after last 10-day forecast)
+export ANL_END=48                       # Download analyses until 480 hours after first init date (i.e., 10 days after last 10-day forecast)
 export ANL_INC=6 			 # Typically 6 hours timestep between analysis files
 
 # ******************************************
@@ -65,12 +69,14 @@ export ANL_INC=6 			 # Typically 6 hours timestep between analysis files
 # ******************************************
 # Select which model forecasts to download (YES/NO)
 export GET_GFS_FCSTS=YES
-export GET_GEFS_FCSTS=YES
-export GET_GEFS_DPROGDT=YES
+export GET_GEFS_FCSTS=NO
+export GET_GEFS_DPROGDT=NO
+
 # Select forecast start, end, and increment to download (applies to GFS_FCSTS and GEFS_FCSTS)
 export FHR_START=0			 # Typically 0 hours (beginning of forecast)
-export FHR_END=240                       # Typically 240 hours (10-day forecast)
+export FHR_END=48                       # Typically 240 hours (10-day forecast)
 export FHR_INC=6                         # Typically 6-hour timestep between forecast files
+
 # Select DPROGDT valid date and increment to download (applies to GEFS_DPROGDT)
 export DPROGDT_VDATE=2022021100    	 # The date and hour of the main event; YYYYMMDDHH
 export DPROGDT_INC=24              	 # Typically 24-hour timestep between dprogdt forecasts
@@ -79,10 +85,10 @@ export DPROGDT_INC=24              	 # Typically 24-hour timestep between dprogd
 # ****This is the CHECK_DATA section*****
 # ***************************************
 # If you've downloaded data, you can check that it exists (YES/NO)
-export CHECK_ANALYSES=YES
-export CHECK_GFS_FCST=YES
-export CHECK_GEFS_FCST=YES
-export CHECK_GEFS_DPROGDT=YES
+export CHECK_ANALYSES=NO
+export CHECK_GFS_FCST=NO
+export CHECK_GEFS_FCST=NO
+export CHECK_GEFS_DPROGDT=NO
 
 # ******************************************
 # ****Select initialization dates/hours*****
@@ -141,6 +147,7 @@ if [ $GET_ANALYSES = YES ]; then
 export GET_ANALYSES=NO
 fi
 
+
 echo "*********************"
 if [ $GET_FORECASTS = YES ]; then
 	if [ $counter = 1 ]; then
@@ -173,6 +180,7 @@ if [ $GET_FORECASTS = YES ]; then
 		export GET_GEFS_DPROGDT=NO
 	fi
 fi
+
 
 echo "*********************"
 if [ $CHECK_DATA = YES ]; then

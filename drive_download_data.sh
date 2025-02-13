@@ -33,7 +33,7 @@ counter=0
 # ****Specify case name, paths, sections to execute*****
 # ******************************************************
 # Specify case study name (e.g., dorian2019)
-export CASE='SNODissue'
+export CASE='Nov292022'
 
 # Location of your saved GFS/GEFS evaluation /download_data directory
 export SCRIPTS_PATH='/lfs/h2/emc/vpppg/save/'${USER}'/gfs_gefs_eval/download_data'
@@ -56,8 +56,8 @@ export CHECK_DATA=NO
 # Select which analysis types to download (YES/NO)
 export GET_GFS_ANL=YES
 export GET_RAP_ANL=NO
-export GET_ST4_ANL=YES
-export GET_NOHRSC_ANL=YES
+export GET_ST4_ANL=NO
+export GET_NOHRSC_ANL=NO
 
 # Select analyses start, end, and increment to download
 export ANL_START=0 			 # Start downloading analysis files for the first initialization date if set to 0
@@ -78,7 +78,7 @@ export FHR_END=48                       # Typically 240 hours (10-day forecast)
 export FHR_INC=6                         # Typically 6-hour timestep between forecast files
 
 # Select DPROGDT valid date and increment to download (applies to GEFS_DPROGDT)
-export DPROGDT_VDATE=2022021100    	 # The date and hour of the main event; YYYYMMDDHH
+export DPROGDT_VDATE=2022112900    	 # The date and hour of the main event; YYYYMMDDHH
 export DPROGDT_INC=24              	 # Typically 24-hour timestep between dprogdt forecasts
 
 # ***************************************
@@ -94,7 +94,7 @@ export CHECK_GEFS_DPROGDT=NO
 # ****Select initialization dates/hours*****
 # ******************************************
 # Specify initialization dates to download (typically 11 dates [YYYYMMDD], ending on the date of the event)
-for longdate in 20220201
+for longdate in 20221129
 do
 
 # Specify the initialization hours to download on each initalization date (typically 00 and 12)

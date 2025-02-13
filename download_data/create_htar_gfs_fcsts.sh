@@ -26,13 +26,27 @@ file="${DATA_PATH}/${CASE}_fhrs.txt"
 
 #################################################################################################
 #----------------------- Info. to download ops GFS forecasts ------------------------------------
+export GFS_CHANGE_DATE7=2025062412
+export GFS_CHANGE_DATE6=2022112900
+export GFS_CHANGE_DATE5=2022062700
 export GFS_CHANGE_DATE4=2021031812
 export GFS_CHANGE_DATE3=2020022600
 export GFS_CHANGE_DATE2=2019061200
 export GFS_CHANGE_DATE1=2017072000
 
+if ((${CYCLE} >= ${GFS_CHANGE_DATE7})) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.4_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
 
-if ((${CYCLE} >= ${GFS_CHANGE_DATE4})) ; then
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE6}) && (${CYCLE} < ${GFS_CHANGE_DATE7}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.3_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
+
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE5}) && (${CYCLE} < ${GFS_CHANGE_DATE6}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.2_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
+
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE4}) && (${CYCLE} < ${GFS_CHANGE_DATE5}))) ; then
 	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_prod_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
         GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
 
@@ -107,13 +121,27 @@ sleep 3
 
 #########################################################################################
 #----------------------- Info. to download retro GFS forecasts --------------------------
+export GFS_CHANGE_DATE7=2025062412
+export GFS_CHANGE_DATE6=2022112900
+export GFS_CHANGE_DATE5=2022062700
 export GFS_CHANGE_DATE4=2021031812
 export GFS_CHANGE_DATE3=2020022600
 export GFS_CHANGE_DATE2=2019061200
 export GFS_CHANGE_DATE1=2017072000
 
+if ((${CYCLE} >= ${GFS_CHANGE_DATE7})) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.4_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
 
-if ((${CYCLE} >= ${GFS_CHANGE_DATE4})) ; then
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE6}) && (${CYCLE} < ${GFS_CHANGE_DATE7}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.3_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
+
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE5}) && (${CYCLE} < ${GFS_CHANGE_DATE6}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_v16.2_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
+					
+elif (((${CYCLE} >= ${GFS_CHANGE_DATE4}) && (${CYCLE} < ${GFS_CHANGE_DATE5}))) ; then
 	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${YYYY}/${YYYYMM}/${YYYYMMDD}/com_gfs_prod_gfs.${YYYYMMDD}_${HH}.gfs_pgrb2.tar
 	GFS_FILENAME=./gfs.${YYYYMMDD}/${HH}/atmos/gfs.t${HH}z.pgrb2.0p25.f${FHHH_same}
 

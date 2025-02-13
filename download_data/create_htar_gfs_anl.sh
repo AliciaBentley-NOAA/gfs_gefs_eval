@@ -29,13 +29,27 @@ while IFS= read -r line ; do
 	export VYYYYMMDD=`echo ${VALID} | cut -c 1-8`
 	export VHH=`echo ${VALID} | cut -c 9-10`
 
+export GFS_CHANGE_DATE7=2025062412
+export GFS_CHANGE_DATE6=2022112900
+export GFS_CHANGE_DATE5=2022062700	
 export GFS_CHANGE_DATE4=2021031812
 export GFS_CHANGE_DATE3=2020022600
 export GFS_CHANGE_DATE2=2019061200
 export GFS_CHANGE_DATE1=2017072000
 
+if ((${VALID} >= ${GFS_CHANGE_DATE7})) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_v16.4_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.anl
 
-if ((${VALID} >= ${GFS_CHANGE_DATE4})) ; then
+elif (((${VALID} >= ${GFS_CHANGE_DATE6}) && (${VALID} < ${GFS_CHANGE_DATE7}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_v16.3_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.anl
+
+elif (((${VALID} >= ${GFS_CHANGE_DATE5}) && (${VALID} < ${GFS_CHANGE_DATE6}))) ; then
+	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_v16.2_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
+	GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.anl		
+
+elif (((${VALID} >= ${GFS_CHANGE_DATE4}) && (${VALID} < ${GFS_CHANGE_DATE5}))) ; then
 	GFS_ARCHIVE=/NCEPPROD/hpssprod/runhistory/rh${VYYYY}/${VYYYYMM}/${VYYYYMMDD}/com_gfs_prod_gfs.${VYYYYMMDD}_${VHH}.gfs_pgrb2.tar
         GFS_FILENAME=./gfs.${VYYYYMMDD}/${VHH}/atmos/gfs.t${VHH}z.pgrb2.0p25.anl
 
@@ -64,7 +78,7 @@ fi
 
 cat > ${DATA_PATH}/analyses/untar_gfs/htar_gfs_anl_${VALID}.sh <<EOF
 #!/bin/bash
-#PBS -N gfs_htar
+#PBS -N gfsanl_htar
 #PBS -o ${OUTPUT_PATH}/out_htar_gfs_anl_${VALID}.out
 #PBS -e ${OUTPUT_PATH}/out_htar_gfs_anl_${VALID}.err
 #PBS -l select=1:ncpus=1:mem=4GB
